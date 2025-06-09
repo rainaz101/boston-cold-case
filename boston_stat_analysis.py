@@ -203,6 +203,108 @@ class BostonCrimeStatAnalyzer:
         print(f"  • Cases with known location: {len(self.df[self.df['Location'] != 'Unknown'])}")
         print(f"  • Average cases per location: {len(self.df) / unique_locations:.2f}")
     
+    def analyze_crime_hotspots(self):
+        """Analyze crime hotspots by Boston neighborhoods and areas"""
+        print("\n🔥 CRIME HOTSPOT ANALYSIS")
+        print("=" * 50)
+        
+        # Extract neighborhood/area information from locations
+        def extract_neighborhood(location):
+            if pd.isna(location) or location.lower() in ['unknown', 'unknown location']:
+                return 'Unknown'
+            
+            location = str(location).lower()
+            
+            # Boston neighborhood mapping based on common patterns
+            neighborhood_keywords = {
+                'dorchester': ['dorchester', 'dot ave', 'blue hill ave', 'morton st'],
+                'roxbury': ['roxbury', 'tremont st', 'washington st', 'malcolm x'],
+                'south end': ['south end', 'harrison ave', 'albany st'],
+                'back bay': ['back bay', 'boylston', 'newbury', 'commonwealth'],
+                'north end': ['north end', 'hanover', 'salem st'],
+                'south boston': ['south boston', 'southie', 'broadway', 'w broadway'],
+                'charlestown': ['charlestown', 'bunker hill'],
+                'jamaica plain': ['jamaica plain', 'centre st', 'south st'],
+                'mattapan': ['mattapan', 'blue hill ave', 'morton st'],
+                'roslindale': ['roslindale', 'centre st', 'washington st'],
+                'west roxbury': ['west roxbury', 'centre st'],
+                'allston': ['allston', 'harvard ave', 'brighton ave'],
+                'brighton': ['brighton', 'washington st', 'market st'],
+                'east boston': ['east boston', 'meridian st', 'bennington'],
+                'fenway': ['fenway', 'boylston st', 'park dr'],
+                'beacon hill': ['beacon hill', 'charles st', 'beacon st'],
+                'chinatown': ['chinatown', 'beach st', 'tyler st'],
+                'downtown': ['downtown', 'washington st', 'state st', 'milk st'],
+                'financial district': ['financial', 'state st', 'federal st']
+            }
+            
+            # Check for neighborhood keywords
+            for neighborhood, keywords in neighborhood_keywords.items():
+                for keyword in keywords:
+                    if keyword in location:
+                        return neighborhood.title()
+            
+            # Check for street patterns that might indicate areas
+            if any(word in location for word in ['st', 'ave', 'rd', 'way', 'blvd']):
+                # Extract street name for grouping
+                words = location.split()
+                for i, word in enumerate(words):
+                    if word in ['st', 'ave', 'rd', 'way', 'blvd'] and i > 0:
+                        street_name = ' '.join(words[max(0, i-2):i+1])
+                        return f"Street: {street_name.title()}"
+            
+            return 'Other/Unclassified'
+        
+        # Apply neighborhood extraction
+        self.df['Neighborhood'] = self.df['Location'].apply(extract_neighborhood)
+        
+        # Analyze by neighborhood
+        neighborhood_counts = self.df['Neighborhood'].value_counts()
+        
+        print("🏙️ Crime by Boston Neighborhoods/Areas:")
+        total_cases = len(self.df)
+        
+        for i, (neighborhood, count) in enumerate(neighborhood_counts.items(), 1):
+            percentage = (count / total_cases) * 100
+            if neighborhood != 'Unknown':
+                print(f"  {i:2d}. {neighborhood}: {count} cases ({percentage:.1f}%)")
+        
+        # Identify top hotspots
+        top_hotspots = neighborhood_counts.head(5)
+        print(f"\n🔥 TOP 5 CRIME HOTSPOTS:")
+        for i, (area, count) in enumerate(top_hotspots.items(), 1):
+            if area != 'Unknown':
+                percentage = (count / total_cases) * 100
+                print(f"  {i}. {area}: {count} cases ({percentage:.1f}% of all cases)")
+        
+        # Street-level analysis for top areas
+        print(f"\n🛣️ STREET-LEVEL BREAKDOWN FOR TOP AREAS:")
+        for area in top_hotspots.head(3).index:
+            if area != 'Unknown' and area != 'Other/Unclassified':
+                area_cases = self.df[self.df['Neighborhood'] == area]
+                if len(area_cases) > 1:
+                    print(f"\n  📍 {area} ({len(area_cases)} cases):")
+                    street_counts = area_cases['Location'].value_counts()
+                    for street, count in street_counts.head(5).items():
+                        if street.lower() != 'unknown location':
+                            print(f"    • {street}: {count} case(s)")
+        
+        # Safety assessment
+        high_crime_areas = neighborhood_counts[neighborhood_counts >= 2]
+        if len(high_crime_areas) > 0:
+            print(f"\n⚠️ HIGH-RISK AREAS (2+ cases):")
+            for area, count in high_crime_areas.items():
+                if area not in ['Unknown', 'Other/Unclassified']:
+                    print(f"  • {area}: {count} cases")
+        
+        # Geographic distribution insights
+        known_neighborhoods = neighborhood_counts[~neighborhood_counts.index.isin(['Unknown', 'Other/Unclassified'])]
+        if len(known_neighborhoods) > 0:
+            print(f"\n📊 Geographic Distribution Summary:")
+            print(f"  • Neighborhoods with cases: {len(known_neighborhoods)}")
+            print(f"  • Most affected area: {known_neighborhoods.index[0]} ({known_neighborhoods.iloc[0]} cases)")
+            print(f"  • Geographic spread: {'Concentrated' if len(known_neighborhoods) <= 5 else 'Widespread'}")
+    
     def analyze_demographic_patterns(self):
         """Analyze demographic patterns and correlations"""
         print("\n👥 DEMOGRAPHIC ANALYSIS")
@@ -376,6 +478,7 @@ class BostonCrimeStatAnalyzer:
             self.generate_basic_statistics()
             self.analyze_temporal_patterns()
             self.analyze_location_patterns()
+            self.analyze_crime_hotspots()
             self.analyze_demographic_patterns()
             self.identify_patterns_and_insights()
             self.generate_summary_report()
