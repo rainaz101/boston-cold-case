@@ -1,0 +1,619 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Boston 2014 Unsolved Homicides</title>
+            <meta charset="UTF-8">            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <style>                .case-card { 
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                    height: 100%;
+                    border: none;
+                    border-radius: 8px;
+                }
+                .case-card:hover { 
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.2); 
+                    transition: all 0.3s ease; 
+                }
+                .case-details { 
+                    padding: 20px; 
+                    white-space: pre-line;
+                }
+                .card-text {
+                    margin-bottom: 0;
+                    font-size: 1rem;
+                    line-height: 1.6;
+                    color: #333;
+                }
+                .card-title {
+                    color: #0d6efd;
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                    margin-bottom: 0.5rem;
+                }
+                .card-meta {
+                    color: #6c757d;
+                    font-size: 0.9rem;
+                    margin-bottom: 1rem;
+                }
+                .card-body {
+                    padding: 1.5rem;
+                }
+                hr {
+                    opacity: 0.1;
+                }
+                .card-meta i {
+                    margin-right: 0.5rem;
+                }
+                .stats-card { 
+                    background-color: #f8f9fa; 
+                    padding: 20px; 
+                    margin-bottom: 20px; 
+                    border-radius: 5px; 
+                }
+                .map-container { 
+                    height: 700px; 
+                    width: 100%; 
+                    border-radius: 5px; 
+                    overflow: hidden; 
+                }
+                .chart-container { 
+                    position: relative; 
+                    height: 400px; 
+                    margin-bottom: 30px; 
+                }
+                .nav-tabs .nav-link.active { 
+                    border-bottom: 3px solid #0d6efd; 
+                }
+                .stat-highlight {
+                    font-size: 1.2em;
+                    font-weight: bold;
+                    color: #0d6efd;
+                }
+            </style>
+        </head>
+        <body>
+            <nav class="navbar navbar-dark bg-primary">
+                <div class="container">
+                    <span class="navbar-brand mb-0 h1">Boston 2014 Unsolved Homicides Database</span>
+                </div>
+            </nav>
+            
+            <div class="container mt-4">
+                <!-- Tab Navigation -->
+                <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button">
+                            Case Summary
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="stats-tab" data-bs-toggle="tab" data-bs-target="#stats" type="button">
+                            Statistical Analysis
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="map-tab" data-bs-toggle="tab" data-bs-target="#map" type="button">
+                            Case Map
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content" id="myTabContent">                    <!-- Summary Tab -->
+                    <div class="tab-pane fade show active" id="summary" role="tabpanel">
+                        <div class="row mb-4">
+                            <div class="col">
+                                <div class="alert alert-info">
+                                    <h4 class="alert-heading">2014 Unsolved Homicides</h4>
+                                    <p>Detailed information about 25 unsolved homicide cases from 2014 in Boston.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+        
+                            <div class="row mb-4">
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Brandon John</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> January 09, 2014 | <strong>Location:</strong> 136 Rowe St.
+                                            </h6>
+                                            <p class="card-text case-details">The 18-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Ricky Mckinney</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> January 14, 2014 | <strong>Location:</strong> 996 Tremont St.
+                                            </h6>
+                                            <p class="card-text case-details">The 34-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                            </div>
+            
+                            <div class="row mb-4">
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Luis Arroyo</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> January 18, 2014 | <strong>Location:</strong> Boston
+                                            </h6>
+                                            <p class="card-text case-details">The 21-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Trevain Keene</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> January 24, 2014 | <strong>Location:</strong> 82 Callendar St.
+                                            </h6>
+                                            <p class="card-text case-details">The 21-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                            </div>
+            
+                            <div class="row mb-4">
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Kenneth Rowell</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> February 20, 2014 | <strong>Location:</strong> 196 Itasca St.
+                                            </h6>
+                                            <p class="card-text case-details">Was later identified as Kenneth Rowell, Jr., 25, and was pronounced deceased. The manner of death of Kenneth Rowell, Jr. was determined to be a homicide by the Office of the Chief Medical Examiner.</p>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Augusta Mims</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> March 01, 2014 | <strong>Location:</strong> 744 Washington St.
+                                            </h6>
+                                            <p class="card-text case-details">A Mims, 30, and was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                            </div>
+            
+                            <div class="row mb-4">
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Joel Leon</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> April 09, 2014 | <strong>Location:</strong> Dorchester
+                                            </h6>
+                                            <p class="card-text case-details">/ W. 5th. The 19-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Oscar Santos-Chaves</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> April 12, 2014 | <strong>Location:</strong> 282 Bord
+                                            </h6>
+                                            <p class="card-text case-details">The 36-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                            </div>
+            
+                            <div class="row mb-4">
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">James Mason</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> April 14, 2014 | <strong>Location:</strong> Boston
+                                            </h6>
+                                            <p class="card-text case-details">The 45-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Daniel Skeens</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> May 02, 2014 | <strong>Location:</strong> 9 Gladeside Ave
+                                            </h6>
+                                            <p class="card-text case-details">The 31-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                            </div>
+            
+                            <div class="row mb-4">
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Gilson Semedo</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> May 08, 2014 | <strong>Location:</strong> 15 Cawfield St.
+                                            </h6>
+                                            <p class="card-text case-details">The 27-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Dominique Boveill</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> May 18, 2014 | <strong>Location:</strong> Boston
+                                            </h6>
+                                            <p class="card-text case-details">The 20-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                            </div>
+            
+                            <div class="row mb-4">
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Michael Depina</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> June 06, 2014 | <strong>Location:</strong> 5 Taft Street.
+                                            </h6>
+                                            <p class="card-text case-details">The 28-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Michael Lanier</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> June 22, 2014 | <strong>Location:</strong> Boston
+                                            </h6>
+                                            <p class="card-text case-details">The 24-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                            </div>
+            
+                            <div class="row mb-4">
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Walter Cook</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> June 29, 2014 | <strong>Location:</strong> Boston
+                                            </h6>
+                                            <p class="card-text case-details">The 38-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Corey Ragland</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> June 30, 2014 | <strong>Location:</strong> 73 Edgewater Dr.
+                                            </h6>
+                                            <p class="card-text case-details">The 36-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                            </div>
+            
+                            <div class="row mb-4">
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Niko Nunez</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> July 19, 2014 | <strong>Location:</strong> 68 Aguadilla St.
+                                            </h6>
+                                            <p class="card-text case-details">The 20-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Dwight Price</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> August 01, 2014 | <strong>Location:</strong> 1005 Columbia Rd.
+                                            </h6>
+                                            <p class="card-text case-details">The 51-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                            </div>
+            
+                            <div class="row mb-4">
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Antoine Dingle-Knight</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> August 11, 2014 | <strong>Location:</strong> 93 Devon St.
+                                            </h6>
+                                            <p class="card-text case-details">The 27-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Shongi Fernandes</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> August 31, 2014 | <strong>Location:</strong> 52 Claybourne St.
+                                            </h6>
+                                            <p class="card-text case-details">The 24-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                            </div>
+            
+                            <div class="row mb-4">
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Adrian Gonzalez</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> September 06, 2014 | <strong>Location:</strong> 17 Ward
+                                            </h6>
+                                            <p class="card-text case-details">Ian Gonzalez, 17, and was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Jimmy Velasquez</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> September 14, 2014 | <strong>Location:</strong> 14 Glenarm St.
+                                            </h6>
+                                            <p class="card-text case-details">The 49-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                            </div>
+            
+                            <div class="row mb-4">
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Raheem Robertson</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> September 29, 2014 | <strong>Location:</strong> 564 Dudley Street
+                                            </h6>
+                                            <p class="card-text case-details">The 21-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Juan Nunez</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> September 30, 2014 | <strong>Location:</strong> 239 Parker Hill Ave.
+                                            </h6>
+                                            <p class="card-text case-details">The 21-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                            </div>
+            
+                            <div class="row mb-4">
+            
+                                <div class="col-md-6 mb-4">
+                                    <div class="card case-card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Shervonne Tucker</h4>
+                                            <h6 class="card-subtitle mb-3 text-muted">
+                                                <strong>Date:</strong> November 01, 2014 | <strong>Location:</strong> Boston
+                                            </h6>
+                                            <p class="card-text case-details">The 35-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                            </div>
+            
+                        </div>
+                    </div>
+                    
+                    <!-- Statistics Tab -->
+                    <div class="tab-pane fade" id="stats" role="tabpanel">
+                        <div class="row mb-4">
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Case Analysis Overview</h4>
+                                        <p class="lead">Total Unsolved Cases in 2014: <span class="stat-highlight">25</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Monthly Distribution</h5>
+                                        <div class="chart-container">
+                                            <canvas id="monthlyChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Seasonal Pattern</h5>
+                                        <div class="chart-container">
+                                            <canvas id="seasonalChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Time of Day Analysis</h5>
+                                        <div class="chart-container">
+                                            <canvas id="timeChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Map Tab -->
+                    <div class="tab-pane fade" id="map" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Case Locations</h5>
+                                <div class="map-container">
+                                    <iframe src="boston_cases_map.html" width="100%" height="100%" frameborder="0"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Initialize Charts -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script>
+                // Monthly Distribution Chart
+                const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+                new Chart(monthlyCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                        datasets: [{
+                            label: 'Cases by Month',
+                            data: [4, 1, 1, 3, 3, 4, 1, 3, 4, 0, 1, 0],
+                            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { 
+                                beginAtZero: true,
+                                ticks: { precision: 0 }
+                            }
+                        }
+                    }
+                });
+
+                // Seasonal Distribution Chart
+                const seasonalCtx = document.getElementById('seasonalChart').getContext('2d');
+                new Chart(seasonalCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Winter', 'Spring', 'Summer', 'Fall'],
+                        datasets: [{
+                            data: [5, 7, 8, 5],
+                            backgroundColor: [
+                                'rgba(54, 162, 235, 0.7)',  // Winter
+                                'rgba(75, 192, 192, 0.7)',  // Spring
+                                'rgba(255, 159, 64, 0.7)',  // Summer
+                                'rgba(255, 99, 132, 0.7)'   // Fall
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                                labels: { padding: 20 }
+                            }
+                        }
+                    }
+                });
+
+                // Time of Day Chart
+                const timeCtx = document.getElementById('timeChart').getContext('2d');
+                new Chart(timeCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Morning (6AM-12PM)', 'Afternoon (12PM-6PM)', 'Evening (6PM-12AM)', 'Night (12AM-6AM)', 'Unknown Time'],
+                        datasets: [{
+                            label: 'Cases by Time of Day',
+                            data: [1, 0, 0, 0, 24],
+                            backgroundColor: 'rgba(153, 102, 255, 0.7)',
+                            borderColor: 'rgba(153, 102, 255, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { 
+                                beginAtZero: true,
+                                ticks: { precision: 0 }
+                            }
+                        }
+                    }
+                });
+            </script>
+        </body>
+        </html>
+        
