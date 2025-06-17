@@ -364,6 +364,126 @@ class ColdCaseCrossChecker:
         lon += random.uniform(-0.01, 0.01)
         return (lat, lon)
 
+    def check_national_cold_case_matches(self):
+        """Check if Boston 2014 cold case victims are in the national cold case database."""
+        # We'll use the Project Cold Case search page and try to match by victim name and city/year
+        base_url = "https://database.projectcoldcase.org/"
+        matches = []
+        for case in self.boston_cases:
+            name = case['victim_name']
+            if name == "Unknown Victim":
+                continue
+            # Try to search by name (simulate, since no API)
+            # In a real implementation, you would automate browser or scrape search results
+            # Here, we just note the name and city for manual/visual matching
+            matches.append({
+                'victim_name': name,
+                'date': case['date'],
+                'location': case['location'],
+                'search_url': f"{base_url}?search={name.replace(' ', '+')}+Boston+2014"
+            })
+        return matches
+
+    def find_national_db_matches(self):
+        """Automatically search Project Cold Case DB for Boston 2014 victims and return matches and potential matches."""
+        import time
+        matches = []
+        potential_matches = []
+        base_url = "https://database.projectcoldcase.org/"
+        headers = {'User-Agent': 'Mozilla/5.0 (compatible; BostonColdCaseBot/1.0)'}
+        for case in self.boston_cases:
+            name = case['victim_name']
+            if name == "Unknown Victim":
+                continue
+            params = {'search': f"{name} Boston"}
+            try:
+                resp = requests.get(base_url, params=params, headers=headers, timeout=15)
+                if resp.status_code != 200:
+                    continue
+                soup = BeautifulSoup(resp.text, 'lxml')
+                rows = soup.find_all('tr')
+                found_exact = False
+                for row in rows:
+                    cells = row.find_all('td')
+                    if len(cells) < 5:
+                        continue
+                    victim_cell = cells[0].get_text(strip=True)
+                    city_cell = cells[4].get_text(strip=True)
+                    # Exact match: name and city
+                    if name.lower() == victim_cell.lower() and 'boston' in city_cell.lower():
+                        match = {
+                            'victim_name': victim_cell,
+                            'date': case['date'],
+                            'location': case['location'],
+                            'city': city_cell,
+                            'details': [c.get_text(strip=True) for c in cells],
+                            'type': 'exact'
+                        }
+                        matches.append(match)
+                        found_exact = True
+                        break  # Only need first exact match per victim
+                if not found_exact:
+                    # Try to find potential matches (partial name, Boston, or similar year)
+                    for row in rows:
+                        cells = row.find_all('td')
+                        if len(cells) < 5:
+                            continue
+                        victim_cell = cells[0].get_text(strip=True)
+                        city_cell = cells[4].get_text(strip=True)
+                        # Potential: partial name match, Boston, or year in details
+                        if (name.split()[0].lower() in victim_cell.lower() or name.split()[-1].lower() in victim_cell.lower()) and 'boston' in city_cell.lower():
+                            match = {
+                                'victim_name': victim_cell,
+                                'date': case['date'],
+                                'location': case['location'],
+                                'city': city_cell,
+                                'details': [c.get_text(strip=True) for c in cells],
+                                'type': 'potential'
+                            }
+                            potential_matches.append(match)
+                            break
+                time.sleep(1)  # Be polite to the server
+            except Exception as e:
+                print(f"Error searching for {name}: {e}")
+        return matches, potential_matches
+
+    def scrape_2013_cases(self):
+        """Scrape Boston Police 2013 unsolved homicides for monthly/seasonal analysis."""
+        url = "https://police.boston.gov/2013-unsolved-homicides/"
+        headers = {'User-Agent': 'Mozilla/5.0 (compatible; BostonColdCaseBot/1.0)'}
+        try:
+            response = requests.get(url, headers=headers, timeout=30)
+            response.raise_for_status()
+            soup = BeautifulSoup(response.content, 'html.parser')
+            text = soup.get_text()
+            # Find all full date lines for month analysis
+            full_date_pattern = r'(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s*2013'
+            full_dates = re.findall(full_date_pattern, text)
+            # Count by month
+            months = {m: 0 for m in [
+                'January', 'February', 'March', 'April', 'May', 'June', 'July',
+                'August', 'September', 'October', 'November', 'December']}
+            for date in full_dates:
+                months[date] += 1
+            # Count by season
+            seasons = {'Winter': 0, 'Spring': 0, 'Summer': 0, 'Fall': 0}
+            season_months = {
+                'Winter': ['December', 'January', 'February'],
+                'Spring': ['March', 'April', 'May'],
+                'Summer': ['June', 'July', 'August'],
+                'Fall': ['September', 'October', 'November']
+            }
+            for month, count in months.items():
+                for season, season_month_list in season_months.items():
+                    if month in season_month_list:
+                        seasons[season] += count
+            return months, seasons
+        except Exception as e:
+            print(f"Error scraping 2013 cases: {e}")
+            return {m: 0 for m in [
+                'January', 'February', 'March', 'April', 'May', 'June', 'July',
+                'August', 'September', 'October', 'November', 'December']}, {'Winter': 0, 'Spring': 0, 'Summer': 0, 'Fall': 0}
+
     def generate_html_report(self, filename="boston_unsolved_homicides_2014.html"):
         """Generate an HTML report with multiple tabs for different analyses."""
         # Create a map for the cases
@@ -421,6 +541,9 @@ class ColdCaseCrossChecker:
                 if month in season_month_list:
                     seasons[season] += 1
                     break
+        
+        # Scrape 2013 data for comparison
+        months_2013, seasons_2013 = self.scrape_2013_cases()
         
         # Generate the HTML
         html = """
@@ -524,6 +647,11 @@ class ColdCaseCrossChecker:
                             Case Map
                         </button>
                     </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="national-tab" data-bs-toggle="tab" data-bs-target="#national" type="button">
+                            National DB Check
+                        </button>
+                    </li>
                 </ul>
 
                 <!-- Tab Content -->
@@ -603,23 +731,25 @@ class ColdCaseCrossChecker:
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="card mb-4">
+                        <div class="row mb-4">
+                            <div class="col">
+                                <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Monthly Distribution</h5>
+                                        <h4 class="card-title">2013 vs 2014 Monthly Distribution</h4>
                                         <div class="chart-container">
-                                            <canvas id="monthlyChart"></canvas>
+                                            <canvas id="monthlyCompareChart"></canvas>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="card mb-4">
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col">
+                                <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">Seasonal Pattern</h5>
+                                        <h4 class="card-title">2013 vs 2014 Seasonal Pattern</h4>
                                         <div class="chart-container">
-                                            <canvas id="seasonalChart"></canvas>
+                                            <canvas id="seasonalCompareChart"></canvas>
                                         </div>
                                     </div>
                                 </div>
@@ -638,23 +768,62 @@ class ColdCaseCrossChecker:
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- National Database Tab -->
+                    <div class="tab-pane fade" id="national" role="tabpanel">
+                        <div class="row mb-4">
+                            <div class="col">
+                                <div class="alert alert-warning">
+                                    <h4 class="alert-heading">National Cold Case Database Matches</h4>
+                                    <p>This tab lists 2014 Boston cold case victims found in the <a href='https://database.projectcoldcase.org/' target='_blank'>Project Cold Case National Database</a> (first page search, best effort). Both exact and potential matches are shown.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+        """
+        matches, potential_matches = self.find_national_db_matches()
+        if matches:
+            html += '<h5>Exact Matches</h5>'
+            html += '<table class="table table-striped"><thead><tr><th>Victim Name</th><th>Date</th><th>Location</th><th>National DB City</th><th>Details</th></tr></thead><tbody>'
+            for match in matches:
+                html += f"<tr><td>{match['victim_name']}</td><td>{match['date']}</td><td>{match['location']}</td><td>{match['city']}</td><td>{' | '.join(match['details'])}</td></tr>"
+            html += '</tbody></table>'
+        else:
+            html += '<div class="alert alert-info">No exact matches found in the national database for these cases (first page search only).</div>'
+        if potential_matches:
+            html += '<h5 class="mt-4">Potential Matches</h5>'
+            html += '<table class="table table-striped"><thead><tr><th>Victim Name</th><th>Date</th><th>Location</th><th>National DB City</th><th>Details</th></tr></thead><tbody>'
+            for match in potential_matches:
+                html += f"<tr><td>{match['victim_name']}</td><td>{match['date']}</td><td>{match['location']}</td><td>{match['city']}</td><td>{' | '.join(match['details'])}</td></tr>"
+            html += '</tbody></table>'
+        html += """
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             
             <!-- Initialize Charts -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
             <script>
-                // Monthly Distribution Chart
-                const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
-                new Chart(monthlyCtx, {
+                // 2013 vs 2014 Monthly Distribution
+                const monthlyCompareCtx = document.getElementById('monthlyCompareChart').getContext('2d');
+                new Chart(monthlyCompareCtx, {
                     type: 'bar',
                     data: {
                         labels: """ + str(list(months.keys())) + """,
                         datasets: [{
-                            label: 'Cases by Month',
+                            label: '2014',
                             data: """ + str(list(months.values())) + """,
                             backgroundColor: 'rgba(54, 162, 235, 0.7)',
                             borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }, {
+                            label: '2013',
+                            data: """ + str(list(months_2013.values()) if months_2013 else []) + """,
+                            backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
                             borderWidth: 1
                         }]
                     },
@@ -670,29 +839,33 @@ class ColdCaseCrossChecker:
                     }
                 });
 
-                // Seasonal Distribution Chart
-                const seasonalCtx = document.getElementById('seasonalChart').getContext('2d');
-                new Chart(seasonalCtx, {
-                    type: 'pie',
+                // 2013 vs 2014 Seasonal Pattern
+                const seasonalCompareCtx = document.getElementById('seasonalCompareChart').getContext('2d');
+                new Chart(seasonalCompareCtx, {
+                    type: 'bar',
                     data: {
                         labels: """ + str(list(seasons.keys())) + """,
                         datasets: [{
+                            label: '2014',
                             data: """ + str(list(seasons.values())) + """,
-                            backgroundColor: [
-                                'rgba(54, 162, 235, 0.7)',  // Winter
-                                'rgba(75, 192, 192, 0.7)',  // Spring
-                                'rgba(255, 159, 64, 0.7)',  // Summer
-                                'rgba(255, 99, 132, 0.7)'   // Fall
-                            ]
+                            backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }, {
+                            label: '2013',
+                            data: """ + str(list(seasons_2013.values()) if seasons_2013 else []) + """,
+                            backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
                         }]
                     },
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: 'right',
-                                labels: { padding: 20 }
+                        scales: {
+                            y: { 
+                                beginAtZero: true,
+                                ticks: { precision: 0 }
                             }
                         }
                     }
