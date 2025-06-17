@@ -6,6 +6,8 @@ from bs4 import BeautifulSoup
 import re
 from datetime import datetime
 import folium
+import time
+import random
 
 class ColdCaseCrossChecker:
     def __init__(self):
@@ -296,32 +298,83 @@ class ColdCaseCrossChecker:
             print(f"Error details: {str(e)}")
             return f"Error scraping Boston Police: {str(e)}"
     
+    def geocode_address(self, address):
+        """Geocode an address using Nominatim API. Returns (lat, lon) or None if not found."""
+        try:
+            url = "https://nominatim.openstreetmap.org/search"
+            params = {
+                'q': address + ', Boston, MA',
+                'format': 'json',
+                'limit': 1
+            }
+            headers = {'User-Agent': 'BostonColdCaseScript/1.0'}
+            response = requests.get(url, params=params, headers=headers, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+            if data:
+                return float(data[0]['lat']), float(data[0]['lon'])
+        except Exception as e:
+            print(f"Geocoding failed for '{address}': {e}")
+        return None
+
+    def get_case_coordinates(self, case):
+        """Get coordinates for a case using address, neighborhood, or fallback."""
+        # Try to geocode address if available
+        address = None
+        if ',' in case['location']:
+            address = case['location']
+        elif case['location'] not in [
+            'Roxbury', 'Dorchester', 'Mattapan', 'Hyde Park', 'Jamaica Plain',
+            'East Boston', 'South Boston', 'Charlestown', 'Back Bay', 'Downtown',
+            'South End', 'Brighton', 'Allston', 'West Roxbury', 'Roslindale', 'Boston']:
+            address = case['location']
+        
+        if address:
+            coords = self.geocode_address(address)
+            if coords:
+                return coords
+        # Fallback to neighborhood center
+        neighborhood_coords = {
+            'Roxbury': [42.3301, -71.0995],
+            'Dorchester': [42.3016, -71.0676],
+            'Mattapan': [42.2771, -71.0914],
+            'Hyde Park': [42.2565, -71.1241],
+            'Jamaica Plain': [42.3097, -71.1151],
+            'East Boston': [42.3702, -71.0389],
+            'South Boston': [42.3381, -71.0476],
+            'Charlestown': [42.3782, -71.0602],
+            'Back Bay': [42.3503, -71.0810],
+            'Downtown': [42.3601, -71.0589],
+            'South End': [42.3388, -71.0765],
+            'Brighton': [42.3464, -71.1627],
+            'Allston': [42.3539, -71.1337],
+            'West Roxbury': [42.2798, -71.1627],
+            'Roslindale': [42.2832, -71.1270],
+            'Boston': [42.3601, -71.0589]
+        }
+        if case['location'] in neighborhood_coords:
+            # Add a small random jitter to avoid marker overlap
+            lat, lon = neighborhood_coords[case['location']]
+            lat += random.uniform(-0.002, 0.002)
+            lon += random.uniform(-0.002, 0.002)
+            return (lat, lon)
+        # Fallback: random jitter around Boston center
+        lat, lon = 42.3601, -71.0589
+        lat += random.uniform(-0.01, 0.01)
+        lon += random.uniform(-0.01, 0.01)
+        return (lat, lon)
+
     def generate_html_report(self, filename="boston_unsolved_homicides_2014.html"):
         """Generate an HTML report with multiple tabs for different analyses."""
         # Create a map for the cases
         boston_map = folium.Map(location=[42.3601, -71.0589], zoom_start=12)
-        
-        # Add custom markers for each case
-        for case in self.boston_cases:
-            # Use the same geocoding logic as before
-            coords = {
-                'Roxbury': [42.3301, -71.0995],
-                'Dorchester': [42.3016, -71.0676],
-                'Mattapan': [42.2771, -71.0914],
-                'Hyde Park': [42.2565, -71.1241],
-                'Jamaica Plain': [42.3097, -71.1151],
-                'East Boston': [42.3702, -71.0389],
-                'South Boston': [42.3381, -71.0476],
-                'Charlestown': [42.3782, -71.0602],
-                'Back Bay': [42.3503, -71.0810],
-                'Downtown': [42.3601, -71.0589],
-                'South End': [42.3388, -71.0765],
-                'Brighton': [42.3464, -71.1627],
-                'Allston': [42.3539, -71.1337],
-                'West Roxbury': [42.2798, -71.1627],
-                'Roslindale': [42.2832, -71.1270]
-            }.get(case['location'], [42.3601, -71.0589])
-            
+        used_coords = set()
+        for i, case in enumerate(self.boston_cases):
+            coords = self.get_case_coordinates(case)
+            # Ensure unique marker positions (avoid overlap)
+            while coords in used_coords:
+                coords = (coords[0] + random.uniform(-0.0005, 0.0005), coords[1] + random.uniform(-0.0005, 0.0005))
+            used_coords.add(coords)
             popup_html = f"""
                 <div style='min-width: 200px'>
                     <h6>{case['victim_name']}</h6>
@@ -330,13 +383,12 @@ class ColdCaseCrossChecker:
                     <p>{case['description']}</p>
                 </div>
             """
-            
             folium.Marker(
                 coords,
                 popup=folium.Popup(popup_html, max_width=300),
                 icon=folium.Icon(color='red', icon='info-sign')
             ).add_to(boston_map)
-            
+            time.sleep(1)  # Be polite to Nominatim API
         boston_map.save('boston_cases_map.html')
         
         # Calculate statistics
@@ -358,15 +410,6 @@ class ColdCaseCrossChecker:
             'Fall': ['September', 'October', 'November']
         }
         
-        # Time patterns
-        time_patterns = {
-            'Morning (6AM-12PM)': 0,
-            'Afternoon (12PM-6PM)': 0,
-            'Evening (6PM-12AM)': 0,
-            'Night (12AM-6AM)': 0,
-            'Unknown Time': 0
-        }
-        
         for case in self.boston_cases:
             # Monthly distribution
             month = case['date'].split()[0]
@@ -378,19 +421,6 @@ class ColdCaseCrossChecker:
                 if month in season_month_list:
                     seasons[season] += 1
                     break
-            
-            # Time of day analysis
-            desc = case['description'].lower()
-            if any(time in desc for time in ['morning', 'am', 'a.m.', '6am', '7am', '8am', '9am', '10am', '11am']):
-                time_patterns['Morning (6AM-12PM)'] += 1
-            elif any(time in desc for time in ['afternoon', 'pm', 'p.m.', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm']):
-                time_patterns['Afternoon (12PM-6PM)'] += 1
-            elif any(time in desc for time in ['evening', 'night', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm']):
-                time_patterns['Evening (6PM-12AM)'] += 1
-            elif any(time in desc for time in ['midnight', '12am', '1am', '2am', '3am', '4am', '5am']):
-                time_patterns['Night (12AM-6AM)'] += 1
-            else:
-                time_patterns['Unknown Time'] += 1
         
         # Generate the HTML
         html = """
@@ -595,18 +625,6 @@ class ColdCaseCrossChecker:
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card mb-4">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Time of Day Analysis</h5>
-                                        <div class="chart-container">
-                                            <canvas id="timeChart"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     
                     <!-- Map Tab -->
@@ -675,32 +693,6 @@ class ColdCaseCrossChecker:
                             legend: {
                                 position: 'right',
                                 labels: { padding: 20 }
-                            }
-                        }
-                    }
-                });
-
-                // Time of Day Chart
-                const timeCtx = document.getElementById('timeChart').getContext('2d');
-                new Chart(timeCtx, {
-                    type: 'bar',
-                    data: {
-                        labels: """ + str(list(time_patterns.keys())) + """,
-                        datasets: [{
-                            label: 'Cases by Time of Day',
-                            data: """ + str(list(time_patterns.values())) + """,
-                            backgroundColor: 'rgba(153, 102, 255, 0.7)',
-                            borderColor: 'rgba(153, 102, 255, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: { 
-                                beginAtZero: true,
-                                ticks: { precision: 0 }
                             }
                         }
                     }
