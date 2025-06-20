@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_c7a43a600570e5d9d4e775e775297332 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_c7a43a600570e5d9d4e775e775297332" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_c7a43a600570e5d9d4e775e775297332 = L.map(
+                "map_c7a43a600570e5d9d4e775e775297332",
+                {
+                    center: [42.3601, -71.0589],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_e27143c5840fefb5003eccb26d52d0a7 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_e27143c5840fefb5003eccb26d52d0a7.addTo(map_c7a43a600570e5d9d4e775e775297332);
+        
+    
+            var marker_dd9c12573a82014842f5beb7594e6682 = L.marker(
+                [42.2903535, -71.1221337],
+                {
+}
+            ).addTo(map_c7a43a600570e5d9d4e775e775297332);
+        
+    
+        var popup_c54e81bc75f14c2cd340cfe9d31a2e8b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4f8029a2a46ca8b78969efcf114959a8 = $(`<div id="html_4f8029a2a46ca8b78969efcf114959a8" style="width: 100.0%; height: 100.0%;">Carly Jones<br>January 29, 2013<br>28 Fawndale Rd</div>`)[0];
+                popup_c54e81bc75f14c2cd340cfe9d31a2e8b.setContent(html_4f8029a2a46ca8b78969efcf114959a8);
+            
+        
+
+        marker_dd9c12573a82014842f5beb7594e6682.bindPopup(popup_c54e81bc75f14c2cd340cfe9d31a2e8b)
+        ;
+
+        
+    
+    
+            var marker_8049fd27bbb7df4829f7e823a0e1f9a7 = L.marker(
+                [42.35597557219023, -71.05270924790872],
+                {
+}
+            ).addTo(map_c7a43a600570e5d9d4e775e775297332);
+        
+    
+        var popup_d08441b3df6b7b27a6f08aad1c343121 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6bb3b70c4d6062db778ccf4573fa4f3f = $(`<div id="html_6bb3b70c4d6062db778ccf4573fa4f3f" style="width: 100.0%; height: 100.0%;">Thaddeus Clark<br>March 9, 2013<br>7 Ronald St., Dorchester</div>`)[0];
+                popup_d08441b3df6b7b27a6f08aad1c343121.setContent(html_6bb3b70c4d6062db778ccf4573fa4f3f);
+            
+        
+
+        marker_8049fd27bbb7df4829f7e823a0e1f9a7.bindPopup(popup_d08441b3df6b7b27a6f08aad1c343121)
+        ;
+
+        
+    
+    
+            var marker_f38d50e985bb41b939afd18c88b5dfec = L.marker(
+                [42.328439, -71.079833],
+                {
+}
+            ).addTo(map_c7a43a600570e5d9d4e775e775297332);
+        
+    
+        var popup_19e59b3d7f7e6e71f4c4547dd61284b4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0800831dfcf921772e8979a2156fd219 = $(`<div id="html_0800831dfcf921772e8979a2156fd219" style="width: 100.0%; height: 100.0%;">Clifton Townsend<br>April 17, 2013<br>237 Dudley St.</div>`)[0];
+                popup_19e59b3d7f7e6e71f4c4547dd61284b4.setContent(html_0800831dfcf921772e8979a2156fd219);
+            
+        
+
+        marker_f38d50e985bb41b939afd18c88b5dfec.bindPopup(popup_19e59b3d7f7e6e71f4c4547dd61284b4)
+        ;
+
+        
+    
+    
+            var marker_11bdfa0815f9475e68f919e536612447 = L.marker(
+                [42.322854, -71.079953],
+                {
+}
+            ).addTo(map_c7a43a600570e5d9d4e775e775297332);
+        
+    
+        var popup_0c43cf4eb165cb91d80bcccd3185fa26 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_4c5b6faed41c4ec8bbeb53365e8bf43a = $(`<div id="html_4c5b6faed41c4ec8bbeb53365e8bf43a" style="width: 100.0%; height: 100.0%;">Joel Phillips<br>April 20, 2013<br>52 Copeland St.</div>`)[0];
+                popup_0c43cf4eb165cb91d80bcccd3185fa26.setContent(html_4c5b6faed41c4ec8bbeb53365e8bf43a);
+            
+        
+
+        marker_11bdfa0815f9475e68f919e536612447.bindPopup(popup_0c43cf4eb165cb91d80bcccd3185fa26)
+        ;
+
+        
+    
+    
+            var marker_fcff65bb6d4c17800c9a4cb502a39e20 = L.marker(
+                [42.3138577, -71.0749029],
+                {
+}
+            ).addTo(map_c7a43a600570e5d9d4e775e775297332);
+        
+    
+        var popup_7daf8e6a050205fad8c0aeb73470d79b = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_9bd23e65f4b88b26871c07ae7bdd8c16 = $(`<div id="html_9bd23e65f4b88b26871c07ae7bdd8c16" style="width: 100.0%; height: 100.0%;">Malcolm Campbell<br>April 28, 2013<br>75 Wayland Street.</div>`)[0];
+                popup_7daf8e6a050205fad8c0aeb73470d79b.setContent(html_9bd23e65f4b88b26871c07ae7bdd8c16);
+            
+        
+
+        marker_fcff65bb6d4c17800c9a4cb502a39e20.bindPopup(popup_7daf8e6a050205fad8c0aeb73470d79b)
+        ;
+
+        
+    
+    
+            var marker_9c820f719d9d968f5ed0ebff873dc1cb = L.marker(
+                [42.3081963, -71.0889482],
+                {
+}
+            ).addTo(map_c7a43a600570e5d9d4e775e775297332);
+        
+    
+        var popup_f03e1cc586491ec69b716dd6c78201d3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8d28f7633a41bd7a79b2280c4380abf0 = $(`<div id="html_8d28f7633a41bd7a79b2280c4380abf0" style="width: 100.0%; height: 100.0%;">Lloyd Powell<br>May 27, 2013<br>125 Elm Hill Avenue.</div>`)[0];
+                popup_f03e1cc586491ec69b716dd6c78201d3.setContent(html_8d28f7633a41bd7a79b2280c4380abf0);
+            
+        
+
+        marker_9c820f719d9d968f5ed0ebff873dc1cb.bindPopup(popup_f03e1cc586491ec69b716dd6c78201d3)
+        ;
+
+        
+    
+    
+            var marker_f4d91c8f4eb9be02884d5855c67a74b9 = L.marker(
+                [42.35571197067451, -71.06743279660388],
+                {
+}
+            ).addTo(map_c7a43a600570e5d9d4e775e775297332);
+        
+    
+        var popup_57692e398ef62b9a7423327a39bf2059 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_adcff4a4b3c5e1c5587051eca26d5504 = $(`<div id="html_adcff4a4b3c5e1c5587051eca26d5504" style="width: 100.0%; height: 100.0%;">Jordan A Miller<br>June 5, 2013<br>633 Cummins Hwy. The victim was later identified as Jord</div>`)[0];
+                popup_57692e398ef62b9a7423327a39bf2059.setContent(html_adcff4a4b3c5e1c5587051eca26d5504);
+            
+        
+
+        marker_f4d91c8f4eb9be02884d5855c67a74b9.bindPopup(popup_57692e398ef62b9a7423327a39bf2059)
+        ;
+
+        
+    
+    
+            var marker_bcfa053541cef99e7603f97dedaca5e6 = L.marker(
+                [42.2819232, -71.0964256],
+                {
+}
+            ).addTo(map_c7a43a600570e5d9d4e775e775297332);
+        
+    
+        var popup_6c78c32af2ebeb05f97cb47900c7852e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7991f938efe1d3cb251a7412bb0d197d = $(`<div id="html_7991f938efe1d3cb251a7412bb0d197d" style="width: 100.0%; height: 100.0%;">Erick Pierre-Louis<br>June 15, 2013<br>82 Wellington Hill St.</div>`)[0];
+                popup_6c78c32af2ebeb05f97cb47900c7852e.setContent(html_7991f938efe1d3cb251a7412bb0d197d);
+            
+        
+
+        marker_bcfa053541cef99e7603f97dedaca5e6.bindPopup(popup_6c78c32af2ebeb05f97cb47900c7852e)
+        ;
+
+        
+    
+    
+            var marker_2147d0878676d0a7ed85e9c97a7bc3a4 = L.marker(
+                [42.3170721, -71.0901574],
+                {
+}
+            ).addTo(map_c7a43a600570e5d9d4e775e775297332);
+        
+    
+        var popup_0e3d8e1af72426b2a8cb98ebd27ac954 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_68e4fef659c13d62fa9a4d2fe51376a1 = $(`<div id="html_68e4fef659c13d62fa9a4d2fe51376a1" style="width: 100.0%; height: 100.0%;">Perris Haynes<br>July 20, 2013<br>131 Harold Street.</div>`)[0];
+                popup_0e3d8e1af72426b2a8cb98ebd27ac954.setContent(html_68e4fef659c13d62fa9a4d2fe51376a1);
+            
+        
+
+        marker_2147d0878676d0a7ed85e9c97a7bc3a4.bindPopup(popup_0e3d8e1af72426b2a8cb98ebd27ac954)
+        ;
+
+        
+    
+    
+            var marker_4d9a2e6d17b8c411ca28cea3885a2266 = L.marker(
+                [42.2792321, -71.0889738],
+                {
+}
+            ).addTo(map_c7a43a600570e5d9d4e775e775297332);
+        
+    
+        var popup_1d660276e75f8c40667e8da7313e9018 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dbab2b7c41fd22e2d5d95c971e83a3ad = $(`<div id="html_dbab2b7c41fd22e2d5d95c971e83a3ad" style="width: 100.0%; height: 100.0%;">Walter White<br>September 5, 2013<br>502 Norfolk St.</div>`)[0];
+                popup_1d660276e75f8c40667e8da7313e9018.setContent(html_dbab2b7c41fd22e2d5d95c971e83a3ad);
+            
+        
+
+        marker_4d9a2e6d17b8c411ca28cea3885a2266.bindPopup(popup_1d660276e75f8c40667e8da7313e9018)
+        ;
+
+        
+    
+    
+            var marker_a7039da2938fd7fe27b6f2d9d553183d = L.marker(
+                [42.356249707905256, -71.05040647137317],
+                {
+}
+            ).addTo(map_c7a43a600570e5d9d4e775e775297332);
+        
+    
+        var popup_22499985d664460482ac03919691005f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b754ec3e43fd1cb12a6f0dc05e1de0b2 = $(`<div id="html_b754ec3e43fd1cb12a6f0dc05e1de0b2" style="width: 100.0%; height: 100.0%;">Jody Hargrove<br>September 7, 2013<br>504 BlueHill Ave.</div>`)[0];
+                popup_22499985d664460482ac03919691005f.setContent(html_b754ec3e43fd1cb12a6f0dc05e1de0b2);
+            
+        
+
+        marker_a7039da2938fd7fe27b6f2d9d553183d.bindPopup(popup_22499985d664460482ac03919691005f)
+        ;
+
+        
+    
+    
+            var marker_fd1e595d81c3c7bd1d635787e2bfd623 = L.marker(
+                [42.2920618, -71.1194481],
+                {
+}
+            ).addTo(map_c7a43a600570e5d9d4e775e775297332);
+        
+    
+        var popup_70b581527f88e4e70269af68ace393af = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_87b2265099fdabc9fbe64b908a2ea518 = $(`<div id="html_87b2265099fdabc9fbe64b908a2ea518" style="width: 100.0%; height: 100.0%;">Nelson B Castillo Jr<br>September 14, 2013<br>80 Archdale Rd.</div>`)[0];
+                popup_70b581527f88e4e70269af68ace393af.setContent(html_87b2265099fdabc9fbe64b908a2ea518);
+            
+        
+
+        marker_fd1e595d81c3c7bd1d635787e2bfd623.bindPopup(popup_70b581527f88e4e70269af68ace393af)
+        ;
+
+        
+    
+    
+            var marker_39f20a1ca8a14bb1c0ed6c2c91f74bb8 = L.marker(
+                [42.322364, -71.0708943],
+                {
+}
+            ).addTo(map_c7a43a600570e5d9d4e775e775297332);
+        
+    
+        var popup_2febc87f947b02ea919dd9dd5b231a34 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_dd613c77058525bb776d7b88c79d3845 = $(`<div id="html_dd613c77058525bb776d7b88c79d3845" style="width: 100.0%; height: 100.0%;">Leroy Carvalho<br>October 2, 2013<br>26 Albion St, Roxbury</div>`)[0];
+                popup_2febc87f947b02ea919dd9dd5b231a34.setContent(html_dd613c77058525bb776d7b88c79d3845);
+            
+        
+
+        marker_39f20a1ca8a14bb1c0ed6c2c91f74bb8.bindPopup(popup_2febc87f947b02ea919dd9dd5b231a34)
+        ;
+
+        
+    
+    
+            var marker_90bd0a21caa95eddfb1ae2a69ee9768b = L.marker(
+                [42.3103261, -71.0916235],
+                {
+}
+            ).addTo(map_c7a43a600570e5d9d4e775e775297332);
+        
+    
+        var popup_30bd4714aa4530f0dbff097df572f4c4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b0164c7a5aa8395ddf3fdd5bcd9a1aa3 = $(`<div id="html_b0164c7a5aa8395ddf3fdd5bcd9a1aa3" style="width: 100.0%; height: 100.0%;">Jose A<br>October 17, 2013<br>280 Humboldt Ave.</div>`)[0];
+                popup_30bd4714aa4530f0dbff097df572f4c4.setContent(html_b0164c7a5aa8395ddf3fdd5bcd9a1aa3);
+            
+        
+
+        marker_90bd0a21caa95eddfb1ae2a69ee9768b.bindPopup(popup_30bd4714aa4530f0dbff097df572f4c4)
+        ;
+
+        
+    
+    
+            var marker_52814cc5f48f1bd60b3d937301c704c0 = L.marker(
+                [42.2875794, -71.0770721],
+                {
+}
+            ).addTo(map_c7a43a600570e5d9d4e775e775297332);
+        
+    
+        var popup_57a1b77c895124864cdeab1aa022ac55 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_49cb5e619d5644f1a533f9fd515a7bfa = $(`<div id="html_49cb5e619d5644f1a533f9fd515a7bfa" style="width: 100.0%; height: 100.0%;">Andrew Mcgee<br>November 16, 2013<br>8 Whitman Street.</div>`)[0];
+                popup_57a1b77c895124864cdeab1aa022ac55.setContent(html_49cb5e619d5644f1a533f9fd515a7bfa);
+            
+        
+
+        marker_52814cc5f48f1bd60b3d937301c704c0.bindPopup(popup_57a1b77c895124864cdeab1aa022ac55)
+        ;
+
+        
+    
+</script>
+</html>

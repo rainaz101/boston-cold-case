@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boston 2013-2015 Unsolved Homicide Reports</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            /* Light theme variables - Blue, White, Grey, Yellow only */
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --border-color: #dee2e6;
+            --card-shadow: rgba(0,0,0,0.1);
+            --card-shadow-hover: rgba(0,0,0,0.15);
+            --header-gradient-start: #1e3c72;
+            --header-gradient-end: #2a5298;
+            --accent-primary: #0d6efd;
+            --accent-secondary: #ffc107;
+            --accent-border: #0d6efd;
+        }
+        
+        [data-theme="dark"] {
+            /* Dark theme variables - Blue, White, Grey, Yellow only */
+            --bg-primary: #212529;
+            --bg-secondary: #343a40;
+            --text-primary: #ffffff;
+            --text-secondary: #adb5bd;
+            --border-color: #495057;
+            --card-shadow: rgba(0,0,0,0.3);
+            --card-shadow-hover: rgba(0,0,0,0.5);
+            --header-gradient-start: #0a1929;
+            --header-gradient-end: #1565c0;
+            --accent-primary: #4dabf7;
+            --accent-secondary: #ffd43b;
+            --accent-border: #4dabf7;
+        }
+        
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .theme-toggle-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050;
+        }
+        
+        #themeToggle {
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        #themeToggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+        
+        [data-theme="dark"] #themeToggle {
+            background: rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        [data-theme="dark"] #themeToggle:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .header-section {
+            background: linear-gradient(135deg, var(--header-gradient-start) 0%, var(--header-gradient-end) 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        .card {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 10px var(--card-shadow);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px var(--card-shadow-hover);
+        }
+        .stat-card {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 10px var(--card-shadow);
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-primary);
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 1rem 0;
+        }
+        .map-container {
+            height: 600px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .nav-tabs .nav-link.active {
+            background-color: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: white;
+        }
+        .case-item {
+            border-left: 4px solid var(--accent-border);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-radius: 0 8px 8px 0;
+            transition: all 0.3s ease;
+        }
+        .victim-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--accent-primary);
+        }
+        .nav-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            border-color: var(--accent-primary);
+        }
+        .nav-card:active {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle-container">
+        <button id="themeToggle" class="btn btn-outline-light btn-sm">
+            <i id="themeIcon" class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <div class="header-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12">
+                    <h1 class="display-6 mb-0">
+                        <i class="fas fa-search me-3"></i>
+                        Boston 2013-2015 Unsolved Homicide Reports
+                    </h1>
+                    <p class="lead mt-2">Comprehensive Analysis Report</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Hidden Navigation Tabs (for functionality) -->
+        <ul class="nav nav-tabs mb-4 d-none" id="reportTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab">
+                    <i class="fas fa-home me-2"></i>Home
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="cases-tab" data-bs-toggle="tab" data-bs-target="#cases" type="button" role="tab">
+                    <i class="fas fa-list me-2"></i>Cases
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="statistics-tab" data-bs-toggle="tab" data-bs-target="#statistics" type="button" role="tab">
+                    <i class="fas fa-chart-pie me-2"></i>Statistics
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="map-tab" data-bs-toggle="tab" data-bs-target="#map" type="button" role="tab">
+                    <i class="fas fa-map me-2"></i>Map
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="national-tab" data-bs-toggle="tab" data-bs-target="#national" type="button" role="tab">
+                    <i class="fas fa-database me-2"></i>National DB
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="tips-tab" data-bs-toggle="tab" data-bs-target="#tips" type="button" role="tab">
+                    <i class="fas fa-lightbulb me-2"></i>Submit Tips
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="reportTabsContent">
+            <!-- Home Tab -->
+            <div class="tab-pane fade show active" id="home" role="tabpanel">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="text-center mb-5">
+                            <h2 class="display-5 mb-4">Welcome to the Boston Cold Cases Database</h2>
+                            <p class="lead mb-4">Explore comprehensive data and analysis of unsolved homicides in Boston from 2013-2015. This interactive report provides detailed case information, statistical analysis, and geographic mapping to help understand crime patterns and support ongoing investigations.</p>
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <div class="stat-card">
+                                        <div class="stat-number">59</div>
+                                        <div class="text-muted">Total Cases</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="stat-card">
+                                        <div class="stat-number">3</div>
+                                        <div class="text-muted">Years Covered</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="stat-card">
+                                        <div class="stat-number">100%</div>
+                                        <div class="text-muted">Unsolved</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-4">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 nav-card" onclick="showTab('cases')">
+                                    <div class="card-body text-center p-4">
+                                        <div class="mb-3">
+                                            <i class="fas fa-list fa-3x text-primary"></i>
+                                        </div>
+                                        <h4 class="card-title">Case Database</h4>
+                                        <p class="card-text">Browse detailed information about each unsolved homicide case, organized by year with victim details and locations.</p>
+                                        <div class="mt-3">
+                                            <span class="badge bg-primary me-1 mb-1">15 Cases (2013)</span>
+                                            <span class="badge bg-primary me-1 mb-1">25 Cases (2014)</span>
+                                            <span class="badge bg-primary mb-1">19 Cases (2015)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 nav-card" onclick="showTab('statistics')">
+                                    <div class="card-body text-center p-4">
+                                        <div class="mb-3">
+                                            <i class="fas fa-chart-pie fa-3x text-primary"></i>
+                                        </div>
+                                        <h4 class="card-title">Statistical Analysis</h4>
+                                        <p class="card-text">View comprehensive charts and graphs showing trends, patterns, and distributions across different time periods.</p>
+                                        <div class="mt-3">
+                                            <span class="badge bg-primary me-2">Monthly Trends</span>
+                                            <span class="badge bg-primary">Seasonal Patterns</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 nav-card" onclick="showTab('map')">
+                                    <div class="card-body text-center p-4">
+                                        <div class="mb-3">
+                                            <i class="fas fa-map fa-3x text-warning"></i>
+                                        </div>
+                                        <h4 class="card-title">Geographic Mapping</h4>
+                                        <p class="card-text">Explore interactive maps showing the locations of unsolved homicides across Boston neighborhoods.</p>
+                                        <div class="mt-3">
+                                            <span class="badge bg-secondary me-1 mb-1">2013 Map</span>
+                                            <span class="badge bg-secondary me-1 mb-1">2014 Map</span>
+                                            <span class="badge bg-secondary mb-1">2015 Map</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 nav-card" onclick="showTab('national')">
+                                    <div class="card-body text-center p-4">
+                                        <div class="mb-3">
+                                            <i class="fas fa-database fa-3x text-primary"></i>
+                                        </div>
+                                        <h4 class="card-title">National Database</h4>
+                                        <p class="card-text">Connect with national cold case databases to identify potential patterns and cross-jurisdictional matches.</p>
+                                        <div class="mt-3">
+                                            <span class="badge bg-warning text-dark">External Integration</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-4 col-md-6">
+                                <div class="card h-100 nav-card" onclick="showTab('tips')">
+                                    <div class="card-body text-center p-4">
+                                        <div class="mb-3">
+                                            <i class="fas fa-lightbulb fa-3x text-warning"></i>
+                                        </div>
+                                        <h4 class="card-title">Submit Anonymous Tips</h4>
+                                        <p class="card-text">Help solve these cases by submitting anonymous tips, information, or leads to assist investigators.</p>
+                                        <div class="mt-3">
+                                            <span class="badge bg-primary me-2">100% Anonymous</span>
+                                            <span class="badge bg-primary">Secure Submission</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                </div>
+            </div>
+            <!-- Cases Tab -->
+            <div class="tab-pane fade" id="cases" role="tabpanel">
+                <!-- Section Navigation -->
+                <div class="row mb-4">
+                    <div class="col">
+                        <nav aria-label="Section navigation">
+                            <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('home')">
+                                    <i class="fas fa-home me-1"></i>Home
+                                </button>
+                                <button class="btn btn-secondary btn-sm" disabled>
+                                    <i class="fas fa-list me-1"></i>Cases
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('statistics')">
+                                    <i class="fas fa-chart-pie me-1"></i>Statistics
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('map')">
+                                    <i class="fas fa-map me-1"></i>Map
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('national')">
+                                    <i class="fas fa-database me-1"></i>National DB
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('tips')">
+                                    <i class="fas fa-lightbulb me-1"></i>Tips
+                                </button>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <!-- Year Sub-tabs for Cases -->
+                <ul class="nav nav-pills mb-3" id="caseYearTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="case2013-tab" data-bs-toggle="pill" data-bs-target="#case2013" type="button" role="tab">
+                            2013 Cases (15)
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="case2014-tab" data-bs-toggle="pill" data-bs-target="#case2014" type="button" role="tab">
+                            2014 Cases (25)
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="case2015-tab" data-bs-toggle="pill" data-bs-target="#case2015" type="button" role="tab">
+                            2015 Cases (19)
+                        </button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content" id="caseYearTabsContent">
+                    <!-- 2013 Cases -->
+                    <div class="tab-pane fade show active" id="case2013" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">2013 Unsolved Homicides (15)</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #1: Carly Jones</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>January 29, 2013 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>28 Fawndale Rd
+                                            </div>
+                                            <p class="mb-0">The 32-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #2: Thaddeus Clark</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>February 15, 2013 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>7 Ronald St., Dorchester
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #3: Clifton Townsend</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>March 08, 2013 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>237 Dudley St.
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #4: Joel Phillips</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>April 12, 2013 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>52 Copeland St.
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #5: Malcolm Campbell</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>April 28, 2013 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>75 Wayland Street
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #6: Lloyd Powell</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>May 19, 2013 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>125 Elm Hill Avenue
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #7: Jordan A Miller</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>June 03, 2013 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>633 Cummins Hwy
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #8: Erick Pierre-Louis</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>July 14, 2013 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>82 Wellington Hill St.
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #9: Perris Haynes</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>August 07, 2013 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>131 Harold Street
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #10: Walter White</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>August 21, 2013 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>502 Norfolk St.
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #11: Jody Hargrove</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>September 15, 2013 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>504 BlueHill Ave.
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #12: Nelson B Castillo Jr</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>October 09, 2013 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>80 Archdale Rd.
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #13: Leroy Carvalho</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>October 25, 2013 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>26 Albion St, Roxbury
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #14: Jose A</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>November 12, 2013 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>280 Humboldt Ave.
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #15: Andrew Mcgee</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>November 28, 2013 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>8 Whitman Street
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2014 Cases -->
+                    <div class="tab-pane fade" id="case2014" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">2014 Unsolved Homicides (25)</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #1: Brandon John</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>January 09, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>136 Rowe St.
+                                            </div>
+                                            <p class="mb-0">The 18-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #2: Ricky Mckinney</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>January 14, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>996 Tremont St.
+                                            </div>
+                                            <p class="mb-0">The 34-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #3: Luis Arroyo</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>January 18, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>Boston
+                                            </div>
+                                            <p class="mb-0">The 21-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #4: Trevain Keene</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>January 24, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>82 Callendar St.
+                                            </div>
+                                            <p class="mb-0">The 21-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #5: Kenneth Rowell</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>February 20, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>196 Itasca St.
+                                            </div>
+                                            <p class="mb-0">Was later identified as Kenneth Rowell, Jr., 25, and was pronounced deceased. The manner of death of Kenneth Rowell, Jr. was determined to be a homicide by the Office of the Chief Medical Examiner.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #6: Augusta Mims</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>March 01, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>744 Washington St.
+                                            </div>
+                                            <p class="mb-0">A Mims, 30, and was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #7: Joel Leon</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>April 09, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>Dorchester
+                                            </div>
+                                            <p class="mb-0">/ W. 5th. The 19-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #8: Oscar Santos-Chaves</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>April 12, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>282 Bord
+                                            </div>
+                                            <p class="mb-0">The 36-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #9: James Mason</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>April 14, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>Boston
+                                            </div>
+                                            <p class="mb-0">The 45-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #10: Kelvin Mwangi</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>May 02, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>1 Elm Hill Ave.
+                                            </div>
+                                            <p class="mb-0">The 33-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #11: Alonzo Pinder</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>May 10, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>45 Westview St.
+                                            </div>
+                                            <p class="mb-0">The 25-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #12: Aja Barber</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>June 07, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>1 Elm Hill Ave.
+                                            </div>
+                                            <p class="mb-0">The 26-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #13: Aijah Harmon</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>June 12, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>Dorchester
+                                            </div>
+                                            <p class="mb-0">The 21-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #14: Geraldo Arroyo</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>June 18, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>Boston
+                                            </div>
+                                            <p class="mb-0">The 32-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #15: Perletta Dozier</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>July 05, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>14 Oakwood Ave.
+                                            </div>
+                                            <p class="mb-0">The 25-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #16: Rashid Salaam</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>July 09, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>115 Thornton St.
+                                            </div>
+                                            <p class="mb-0">The 32-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #17: Peter Hoyte</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>July 27, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>73 Dacia St.
+                                            </div>
+                                            <p class="mb-0">The 29-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #18: Lashonda Ramsey</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>August 02, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>21 Humboldt Ave.
+                                            </div>
+                                            <p class="mb-0">The 24-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #19: Marques Osborne</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>August 09, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>34 Waverly St.
+                                            </div>
+                                            <p class="mb-0">The 27-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #20: Shongi Fernandes</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>August 31, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>52 Claybourne St.
+                                            </div>
+                                            <p class="mb-0">The 24-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #21: Adrian Gonzalez</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>September 06, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>17 Ward
+                                            </div>
+                                            <p class="mb-0">Ian Gonzalez, 17, and was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #22: Jimmy Velasquez</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>September 14, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>14 Glenarm St.
+                                            </div>
+                                            <p class="mb-0">The 49-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #23: Raheem Robertson</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>September 29, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>564 Dudley Street
+                                            </div>
+                                            <p class="mb-0">The 21-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #24: Juan Nunez</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>September 30, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>239 Parker Hill Ave.
+                                            </div>
+                                            <p class="mb-0">The 21-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #25: Shervonne Tucker</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>November 01, 2014 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>Boston
+                                            </div>
+                                            <p class="mb-0">The 35-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <!-- 2015 Cases -->
+                    <div class="tab-pane fade" id="case2015" role="tabpanel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">2015 Unsolved Homicides (19)</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #1: Alex Dosouto</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>January 8, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>104 Harrishof St.
+                                            </div>
+                                            <p class="mb-0">The 25-year-old was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #2: Willie Williams</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>March 14, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>23 Lincoln
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #3: Jeromie Johnson</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>March 22, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>50 Richfield Street
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #4: Nevin King</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>April 05, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>67 Winthrop St.
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #5: Larry Moore</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>May 18, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>70 Weave
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #6: Ryan Alexander</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>June 09, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>Boston
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #7: Jason Castillo</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>June 21, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>50 Brookway
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #8: Grisel Sanchez</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>June 30, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>Boston
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #9: Andrew Reid</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>July 12, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>12 Ernst
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #10: Angel Oller</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>July 25, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>12 Ernst
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #11: Darwin Adilas</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>August 03, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>41 Hosmer St.
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #12: Tedford Davis</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>August 18, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>29 Crest
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #13: Zachary Pinnick</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>September 07, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>56 Holworthy St.
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #14: Natho C</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>September 22, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>Boston
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #15: Dominic J</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>October 11, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>15 Shepton St.
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #16: Bryan Santos</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>October 28, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>348 Centre St.
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #17: Jephthe Chery</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>November 05, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>19 Yawkey Way
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #18: Wellington Ruiz</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>November 19, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>Boston
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="case-item">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="victim-name">Case #19: Eric Durham</div>
+                                            <div class="text-muted mb-2">
+                                                <i class="fas fa-calendar me-2"></i>December 03, 2015 | 
+                                                <i class="fas fa-map-marker-alt me-2"></i>120 Southern Ave.
+                                            </div>
+                                            <p class="mb-0">The victim was pronounced deceased. The death was ruled a homicide.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Statistics Tab -->
+            <div class="tab-pane fade" id="statistics" role="tabpanel">
+                <!-- Section Navigation -->
+                <div class="row mb-4">
+                    <div class="col">
+                        <nav aria-label="Section navigation">
+                            <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('home')">
+                                    <i class="fas fa-home me-1"></i>Home
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('cases')">
+                                    <i class="fas fa-list me-1"></i>Cases
+                                </button>
+                                <button class="btn btn-secondary btn-sm" disabled>
+                                    <i class="fas fa-chart-pie me-1"></i>Statistics
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('map')">
+                                    <i class="fas fa-map me-1"></i>Map
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('national')">
+                                    <i class="fas fa-database me-1"></i>National DB
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('tips')">
+                                    <i class="fas fa-lightbulb me-1"></i>Tips
+                                </button>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">2013 vs 2014 vs 2015 Monthly Distribution</h4>
+                                <div class="chart-container">
+                                    <canvas id="monthlyCompareChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">2013 vs 2014 vs 2015 Seasonal Pattern</h4>
+                                <div class="chart-container">
+                                    <canvas id="seasonalCompareChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Top 5 Boston Areas with Most Unsolved Cases (2013-2015)</h4>
+                                <div class="chart-container">
+                                    <canvas id="locationChart"></canvas>
+                                </div>
+                                <div class="row mt-4 g-3">
+                                    <div class="col-lg-2 col-md-4 col-sm-6">
+                                        <div class="text-center p-3 border rounded">
+                                            <h6 class="text-primary">#1 Dorchester</h6>
+                                            <p class="h4 text-primary">12</p>
+                                            <small class="text-muted">20.3%</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-4 col-sm-6">
+                                        <div class="text-center p-3 border rounded">
+                                            <h6 class="text-warning">#2 Roxbury</h6>
+                                            <p class="h4 text-warning">9</p>
+                                            <small class="text-muted">15.3%</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-4 col-sm-6">
+                                        <div class="text-center p-3 border rounded">
+                                            <h6 class="text-secondary">#3 Mattapan</h6>
+                                            <p class="h4 text-secondary">6</p>
+                                            <small class="text-muted">10.2%</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-4 col-sm-6">
+                                        <div class="text-center p-3 border rounded">
+                                            <h6 class="text-primary">#4 South End</h6>
+                                            <p class="h4 text-primary">5</p>
+                                            <small class="text-muted">8.5%</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-4 col-sm-6">
+                                        <div class="text-center p-3 border rounded">
+                                            <h6 class="text-warning">#5 Jamaica Plain</h6>
+                                            <p class="h4 text-warning">4</p>
+                                            <small class="text-muted">6.8%</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-md-4 col-sm-6">
+                                        <div class="text-center p-3 border rounded bg-light">
+                                            <h6 class="text-muted">Other Areas</h6>
+                                            <p class="h4 text-muted">23</p>
+                                            <small class="text-muted">39.0%</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <small class="text-muted">
+                                        <strong>Note:</strong> Analysis based on victim addresses and known Boston neighborhood boundaries. 
+                                        Top 5 areas account for 61% of all unsolved cases. Remaining cases (23 cases, 39%) are distributed 
+                                        across other Boston neighborhoods including Back Bay, North End, East Boston, and areas with incomplete address data.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Map Tab -->
+            <div class="tab-pane fade" id="map" role="tabpanel">
+                <!-- Section Navigation -->
+                <div class="row mb-4">
+                    <div class="col">
+                        <nav aria-label="Section navigation">
+                            <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('home')">
+                                    <i class="fas fa-home me-1"></i>Home
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('cases')">
+                                    <i class="fas fa-list me-1"></i>Cases
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('statistics')">
+                                    <i class="fas fa-chart-pie me-1"></i>Statistics
+                                </button>
+                                <button class="btn btn-secondary btn-sm" disabled>
+                                    <i class="fas fa-map me-1"></i>Map
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('national')">
+                                    <i class="fas fa-database me-1"></i>National DB
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('tips')">
+                                    <i class="fas fa-lightbulb me-1"></i>Tips
+                                </button>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <!-- Year Sub-tabs for Maps -->
+                <ul class="nav nav-pills mb-3" id="mapYearTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="map2013-tab" data-bs-toggle="pill" data-bs-target="#map2013" type="button" role="tab">
+                            2013 Cases (15)
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="map2014-tab" data-bs-toggle="pill" data-bs-target="#map2014" type="button" role="tab">
+                            2014 Cases (25)
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="map2015-tab" data-bs-toggle="pill" data-bs-target="#map2015" type="button" role="tab">
+                            2015 Cases (19)
+                        </button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content" id="mapYearTabsContent">
+                    <!-- 2013 Map -->
+                    <div class="tab-pane fade show active" id="map2013" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">2013 Case Locations</h5>
+                                <div class="map-container">
+                                    <iframe src="boston_cases_map_2013.html" width="100%" height="100%" frameborder="0"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2014 Map -->
+                    <div class="tab-pane fade" id="map2014" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">2014 Case Locations</h5>
+                                <div class="map-container">
+                                    <iframe src="boston_cases_map.html" width="100%" height="100%" frameborder="0"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 2015 Map -->
+                    <div class="tab-pane fade" id="map2015" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">2015 Case Locations</h5>
+                                <div class="map-container">
+                                    <iframe src="boston_cases_map_2015.html" width="100%" height="100%" frameborder="0"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- National Database Tab -->
+            <div class="tab-pane fade" id="national" role="tabpanel">
+                <!-- Section Navigation -->
+                <div class="row mb-4">
+                    <div class="col">
+                        <nav aria-label="Section navigation">
+                            <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('home')">
+                                    <i class="fas fa-home me-1"></i>Home
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('cases')">
+                                    <i class="fas fa-list me-1"></i>Cases
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('statistics')">
+                                    <i class="fas fa-chart-pie me-1"></i>Statistics
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('map')">
+                                    <i class="fas fa-map me-1"></i>Map
+                                </button>
+                                <button class="btn btn-secondary btn-sm" disabled>
+                                    <i class="fas fa-database me-1"></i>National DB
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('tips')">
+                                    <i class="fas fa-lightbulb me-1"></i>Tips
+                                </button>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col">
+                        <div class="alert alert-warning">
+                            <h4 class="alert-heading">National Cold Case Database Matches</h4>
+                            <p>This section would show matches from the <a href='https://database.projectcoldcase.org/' target='_blank'>Project Cold Case National Database</a>. 
+                            Due to technical limitations, this feature is currently disabled.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tips Tab -->
+            <div class="tab-pane fade" id="tips" role="tabpanel">
+                <!-- Section Navigation -->
+                <div class="row mb-4">
+                    <div class="col">
+                        <nav aria-label="Section navigation">
+                            <div class="d-flex flex-wrap gap-2 justify-content-center">
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('home')">
+                                    <i class="fas fa-home me-1"></i>Home
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('cases')">
+                                    <i class="fas fa-list me-1"></i>Cases
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('statistics')">
+                                    <i class="fas fa-chart-pie me-1"></i>Statistics
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('map')">
+                                    <i class="fas fa-map me-1"></i>Map
+                                </button>
+                                <button class="btn btn-outline-secondary btn-sm" onclick="showTab('national')">
+                                    <i class="fas fa-database me-1"></i>National DB
+                                </button>
+                                <button class="btn btn-secondary btn-sm" disabled>
+                                    <i class="fas fa-lightbulb me-1"></i>Tips
+                                </button>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-header bg-warning text-dark">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-lightbulb fa-2x me-3"></i>
+                                    <div>
+                                        <h4 class="mb-0">Submit Anonymous Tips</h4>
+                                        <p class="mb-0">Help solve these unsolved homicides</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-info">
+                                    <h5 class="alert-heading">
+                                        <i class="fas fa-shield-alt me-2"></i>Your Privacy is Protected
+                                    </h5>
+                                    <p class="mb-0">This form allows you to submit tips completely anonymously. No personal information is required or stored. Help us bring justice to the families of these victims.</p>
+                                </div>
+                                
+                                <form id="tipForm">
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <label for="tipType" class="form-label">Type of Information</label>
+                                            <select class="form-select" id="tipType" required>
+                                                <option value="">Select information type</option>
+                                                <option value="witness">Witness Information</option>
+                                                <option value="suspect">Suspect Information</option>
+                                                <option value="vehicle">Vehicle Information</option>
+                                                <option value="location">Location/Scene Details</option>
+                                                <option value="relationship">Personal Relationships</option>
+                                                <option value="other">Other Information</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label for="tipDetails" class="form-label">Details of Your Tip</label>
+                                        <textarea class="form-control" id="tipDetails" rows="8" required 
+                                                  placeholder="Please provide as much detail as possible. Include dates, times, locations, names, descriptions, or any other relevant information that might help investigators."></textarea>
+                                        <div class="form-text">Be specific but only share what you know to be factual.</div>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label for="contactInfo" class="form-label">Contact Information (Optional & Anonymous)</label>
+                                        <textarea class="form-control" id="contactInfo" rows="2"
+                                                  placeholder="If you're willing to be contacted anonymously (encrypted email, secure phone number, etc.), provide safe contact details here. This is completely optional."></textarea>
+                                        <div class="form-text">Only provide this if you want investigators to be able to follow up with you securely.</div>
+                                    </div>
+                                    
+                                    <div class="alert alert-warning">
+                                        <strong>Important:</strong> If you have information about an active crime or immediate danger, please contact 911 or Boston Police directly at (617) 343-4200.
+                                    </div>
+                                    
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                                        <button type="submit" class="btn btn-warning btn-lg">
+                                            <i class="fas fa-paper-plane me-2"></i>Submit Anonymous Tip
+                                        </button>
+                                        <button type="reset" class="btn btn-outline-secondary btn-lg">
+                                            <i class="fas fa-eraser me-2"></i>Clear Form
+                                        </button>
+                                    </div>
+                                </form>
+                                
+                                <div id="submitResult" class="mt-4" style="display: none;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-phone fa-2x text-primary mb-3"></i>
+                                        <h5>Call the Tip Line</h5>
+                                        <p>Boston Police Anonymous Tip Line</p>
+                                        <p class="h5 text-primary">(617) 343-4275</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-envelope fa-2x text-primary mb-3"></i>
+                                        <h5>Text Tips</h5>
+                                        <p>Text anonymous tips to</p>
+                                        <p class="h5 text-primary">TIP (847)</p>
+                                        <small class="text-muted">Standard messaging rates apply</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-0">Boston Cold Cases Analysis Report</p>
+            <p class="mb-0"><small>Data source: Boston Police Department</small></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Monthly Comparison Chart
+        const monthlyCompareCtx = document.getElementById('monthlyCompareChart').getContext('2d');
+        new Chart(monthlyCompareCtx, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                datasets: [{
+                    label: '2013',
+                    data: [1, 2, 1, 2, 1, 1, 2, 1, 2, 1, 1, 0],
+                    backgroundColor: 'rgba(13, 110, 253, 0.7)',
+                    borderColor: 'rgba(13, 110, 253, 1)',
+                    borderWidth: 1
+                }, {
+                    label: '2014',
+                    data: [2, 1, 1, 3, 2, 3, 4, 3, 2, 2, 1, 1],
+                    backgroundColor: 'rgba(255, 196, 7, 0.7)',
+                    borderColor: 'rgba(255, 196, 7, 1)',
+                    borderWidth: 1
+                }, {
+                    label: '2015',
+                    data: [1, 0, 2, 1, 1, 3, 2, 2, 3, 2, 1, 1],
+                    backgroundColor: 'rgba(108, 117, 125, 0.7)',
+                    borderColor: 'rgba(108, 117, 125, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        ticks: { precision: 0 }
+                    }
+                }
+            }
+        });
+
+        // Seasonal Comparison Chart
+        const seasonalCompareCtx = document.getElementById('seasonalCompareChart').getContext('2d');
+        new Chart(seasonalCompareCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Winter', 'Spring', 'Summer', 'Fall'],
+                datasets: [{
+                    label: '2013',
+                    data: [3, 5, 4, 3],
+                    backgroundColor: 'rgba(13, 110, 253, 0.7)',
+                    borderColor: 'rgba(13, 110, 253, 1)',
+                    borderWidth: 1
+                }, {
+                    label: '2014',
+                    data: [4, 6, 10, 5],
+                    backgroundColor: 'rgba(255, 196, 7, 0.7)',
+                    borderColor: 'rgba(255, 196, 7, 1)',
+                    borderWidth: 1
+                }, {
+                    label: '2015',
+                    data: [2, 4, 7, 6],
+                    backgroundColor: 'rgba(108, 117, 125, 0.7)',
+                    borderColor: 'rgba(108, 117, 125, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { 
+                        beginAtZero: true,
+                        ticks: { precision: 0 }
+                    }
+                }
+            }
+        });
+
+        // Location Analysis Chart
+        const locationCtx = document.getElementById('locationChart').getContext('2d');
+        new Chart(locationCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Dorchester', 'Roxbury', 'Mattapan', 'South End', 'Jamaica Plain', 'Other Areas'],
+                datasets: [{
+                    data: [12, 9, 6, 5, 4, 23],
+                    backgroundColor: [
+                        'rgba(13, 110, 253, 0.8)',
+                        'rgba(255, 196, 7, 0.8)', 
+                        'rgba(108, 117, 125, 0.8)',
+                        'rgba(13, 110, 253, 0.6)',
+                        'rgba(255, 196, 7, 0.6)',
+                        'rgba(233, 236, 239, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(13, 110, 253, 1)',
+                        'rgba(255, 196, 7, 1)',
+                        'rgba(108, 117, 125, 1)',
+                        'rgba(13, 110, 253, 1)',
+                        'rgba(255, 196, 7, 1)',
+                        'rgba(173, 181, 189, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                return context.label + ': ' + context.parsed + ' cases (' + percentage + '%)';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Function to show specific tabs from navigation cards
+        function showTab(tabName) {
+            // Hide home tab first
+            const homeTab = document.getElementById('home-tab');
+            homeTab.click(); // This ensures proper cleanup
+            
+            // Then show the requested tab
+            setTimeout(() => {
+                const targetTab = document.getElementById(tabName + '-tab');
+                if (targetTab) {
+                    targetTab.click();
+                }
+            }, 50);
+        }
+
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const body = document.body;
+        
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            themeIcon.className = 'fas fa-sun';
+        }
+        
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = body.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                // Switch to light mode
+                body.removeAttribute('data-theme');
+                themeIcon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'light');
+            } else {
+                // Switch to dark mode
+                body.setAttribute('data-theme', 'dark');
+                themeIcon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Handle tip form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const tipForm = document.getElementById('tipForm');
+            if (tipForm) {
+                tipForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const resultDiv = document.getElementById('submitResult');
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-success">
+                            <h5 class="alert-heading">
+                                <i class="fas fa-check-circle me-2"></i>Tip Submitted Successfully
+                            </h5>
+                            <p class="mb-2">Thank you for submitting your anonymous tip. Your information has been securely forwarded to the Boston Police Department's Cold Case Unit.</p>
+                            <p class="mb-0"><strong>Reference ID:</strong> TIP-${Date.now()}</p>
+                            <hr>
+                            <p class="mb-0"><small>If you have additional information or need to reference this tip, please save the reference ID above.</small></p>
+                        </div>
+                    `;
+                    resultDiv.style.display = 'block';
+                    
+                    // Scroll to result
+                    resultDiv.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Clear form after a delay
+                    setTimeout(() => {
+                        this.reset();
+                    }, 2000);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_aced037c9e62eb12136179b0f8f671e1 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_aced037c9e62eb12136179b0f8f671e1" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_aced037c9e62eb12136179b0f8f671e1 = L.map(
+                "map_aced037c9e62eb12136179b0f8f671e1",
+                {
+                    center: [42.3601, -71.0589],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_bdeac3257fec4c65539f0f31427ea751 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_bdeac3257fec4c65539f0f31427ea751.addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var marker_2ddac6d54f2717123a8f0b9fd99291e0 = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_d8e418aab577b4b89486709f3e2bad08 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_aee92862c40207189dc8e3431da229fd = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_410104da1f753a068bf64a9ff1eb76f4 = $(`<div id="html_410104da1f753a068bf64a9ff1eb76f4" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Brandon John</h6>                     <p><strong>Date:</strong> January 09, 2014</p>                     <p><strong>Location:</strong> 136 Rowe St.</p>                     <p>The 18-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_aee92862c40207189dc8e3431da229fd.setContent(html_410104da1f753a068bf64a9ff1eb76f4);
+            
+        
+
+        marker_2ddac6d54f2717123a8f0b9fd99291e0.bindPopup(popup_aee92862c40207189dc8e3431da229fd)
+        ;
+
+        
+    
+    
+                marker_2ddac6d54f2717123a8f0b9fd99291e0.setIcon(icon_d8e418aab577b4b89486709f3e2bad08);
+            
+    
+            var marker_4e8b6b291844fe790d562c382cfdd20d = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_b4652308717bd8ad436a96605ca09357 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_005e4953962ba912478521e7ba73465d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7fe6b6237494c5529cc0cf463ec84818 = $(`<div id="html_7fe6b6237494c5529cc0cf463ec84818" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Ricky Mckinney</h6>                     <p><strong>Date:</strong> January 14, 2014</p>                     <p><strong>Location:</strong> 996 Tremont St.</p>                     <p>The 34-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_005e4953962ba912478521e7ba73465d.setContent(html_7fe6b6237494c5529cc0cf463ec84818);
+            
+        
+
+        marker_4e8b6b291844fe790d562c382cfdd20d.bindPopup(popup_005e4953962ba912478521e7ba73465d)
+        ;
+
+        
+    
+    
+                marker_4e8b6b291844fe790d562c382cfdd20d.setIcon(icon_b4652308717bd8ad436a96605ca09357);
+            
+    
+            var marker_272a82cdcd70b94627a2563a387cdcf0 = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_e602e9bba4fd2d8e482495db7defb8d3 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1ba70fa8f64ab7eee68f77f9ee914b96 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_3dc665772a779b02f5519038572ee202 = $(`<div id="html_3dc665772a779b02f5519038572ee202" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Luis Arroyo</h6>                     <p><strong>Date:</strong> January 18, 2014</p>                     <p><strong>Location:</strong> Boston</p>                     <p>The 21-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_1ba70fa8f64ab7eee68f77f9ee914b96.setContent(html_3dc665772a779b02f5519038572ee202);
+            
+        
+
+        marker_272a82cdcd70b94627a2563a387cdcf0.bindPopup(popup_1ba70fa8f64ab7eee68f77f9ee914b96)
+        ;
+
+        
+    
+    
+                marker_272a82cdcd70b94627a2563a387cdcf0.setIcon(icon_e602e9bba4fd2d8e482495db7defb8d3);
+            
+    
+            var marker_869e98219b33c7ed5bc61beb2ee98567 = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_e09e82272eb1d62e06e59a964f516951 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ff35410b7f5ae06fd2e0832b14ca04c1 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9533bda98018949caae0a0892007c7ca = $(`<div id="html_9533bda98018949caae0a0892007c7ca" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Trevain Keene</h6>                     <p><strong>Date:</strong> January 24, 2014</p>                     <p><strong>Location:</strong> 82 Callendar St.</p>                     <p>The 21-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_ff35410b7f5ae06fd2e0832b14ca04c1.setContent(html_9533bda98018949caae0a0892007c7ca);
+            
+        
+
+        marker_869e98219b33c7ed5bc61beb2ee98567.bindPopup(popup_ff35410b7f5ae06fd2e0832b14ca04c1)
+        ;
+
+        
+    
+    
+                marker_869e98219b33c7ed5bc61beb2ee98567.setIcon(icon_e09e82272eb1d62e06e59a964f516951);
+            
+    
+            var marker_c3a5a7fd35383510585b960f1bd847ca = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_52703f982f160d4151852ae2587b01f5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6503153d13fb553a4418e12c6f4c9f02 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_649ff617b72ec6581b57c39911a8a2df = $(`<div id="html_649ff617b72ec6581b57c39911a8a2df" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Kenneth Rowell</h6>                     <p><strong>Date:</strong> February 20, 2014</p>                     <p><strong>Location:</strong> 196 Itasca St.</p>                     <p>Was later identified as Kenneth Rowell, Jr., 25, and was pronounced deceased. The manner of death of Kenneth Rowell, Jr. was determined to be a homicide by the Office of the Chief Medical Examiner.</p>                 </div>             </div>`)[0];
+                popup_6503153d13fb553a4418e12c6f4c9f02.setContent(html_649ff617b72ec6581b57c39911a8a2df);
+            
+        
+
+        marker_c3a5a7fd35383510585b960f1bd847ca.bindPopup(popup_6503153d13fb553a4418e12c6f4c9f02)
+        ;
+
+        
+    
+    
+                marker_c3a5a7fd35383510585b960f1bd847ca.setIcon(icon_52703f982f160d4151852ae2587b01f5);
+            
+    
+            var marker_277601162526da424ea983ed2a6b7afe = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_a180f6e5bd37de9655391b9a495ab7ae = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a2f37e8dd27b78e051bb9f0b0660c7a5 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9edf90d18a1a288f0a41f1062c2fd113 = $(`<div id="html_9edf90d18a1a288f0a41f1062c2fd113" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Augusta Mims</h6>                     <p><strong>Date:</strong> March 01, 2014</p>                     <p><strong>Location:</strong> 744 Washington St.</p>                     <p>A Mims, 30, and was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_a2f37e8dd27b78e051bb9f0b0660c7a5.setContent(html_9edf90d18a1a288f0a41f1062c2fd113);
+            
+        
+
+        marker_277601162526da424ea983ed2a6b7afe.bindPopup(popup_a2f37e8dd27b78e051bb9f0b0660c7a5)
+        ;
+
+        
+    
+    
+                marker_277601162526da424ea983ed2a6b7afe.setIcon(icon_a180f6e5bd37de9655391b9a495ab7ae);
+            
+    
+            var marker_1687aab66b5c0f8d255f9f4aed097250 = L.marker(
+                [42.3016, -71.0676],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_19e283f7f389e1e1c1a605199c4c5402 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c831ab7b1f968807d67cd5ed678ad11b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_b0975f1bd4c4d7ea593ef29fea7b0bf3 = $(`<div id="html_b0975f1bd4c4d7ea593ef29fea7b0bf3" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Joel Leon</h6>                     <p><strong>Date:</strong> April 09, 2014</p>                     <p><strong>Location:</strong> Dorchester</p>                     <p>/ W. 5th. The 19-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_c831ab7b1f968807d67cd5ed678ad11b.setContent(html_b0975f1bd4c4d7ea593ef29fea7b0bf3);
+            
+        
+
+        marker_1687aab66b5c0f8d255f9f4aed097250.bindPopup(popup_c831ab7b1f968807d67cd5ed678ad11b)
+        ;
+
+        
+    
+    
+                marker_1687aab66b5c0f8d255f9f4aed097250.setIcon(icon_19e283f7f389e1e1c1a605199c4c5402);
+            
+    
+            var marker_57511e011b5eebc7e48d44f2dd8ffbc9 = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_7bcb622dff77f4be3ec73127092b20cc = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6bdce236aa85ff8c0cc52519d3d8b74e = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_49271917f537fdaef63f71582bf6f8b5 = $(`<div id="html_49271917f537fdaef63f71582bf6f8b5" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Oscar Santos-Chaves</h6>                     <p><strong>Date:</strong> April 12, 2014</p>                     <p><strong>Location:</strong> 282 Bord</p>                     <p>The 36-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_6bdce236aa85ff8c0cc52519d3d8b74e.setContent(html_49271917f537fdaef63f71582bf6f8b5);
+            
+        
+
+        marker_57511e011b5eebc7e48d44f2dd8ffbc9.bindPopup(popup_6bdce236aa85ff8c0cc52519d3d8b74e)
+        ;
+
+        
+    
+    
+                marker_57511e011b5eebc7e48d44f2dd8ffbc9.setIcon(icon_7bcb622dff77f4be3ec73127092b20cc);
+            
+    
+            var marker_dc4aa20251e30f400c45912da83d9aff = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_93a6335b05bd8a928e724c260d037457 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a8977b09638bc427a57f00a9751ea64b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_c793481d5cd4c8627d0c49d149a320be = $(`<div id="html_c793481d5cd4c8627d0c49d149a320be" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>James Mason</h6>                     <p><strong>Date:</strong> April 14, 2014</p>                     <p><strong>Location:</strong> Boston</p>                     <p>The 45-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_a8977b09638bc427a57f00a9751ea64b.setContent(html_c793481d5cd4c8627d0c49d149a320be);
+            
+        
+
+        marker_dc4aa20251e30f400c45912da83d9aff.bindPopup(popup_a8977b09638bc427a57f00a9751ea64b)
+        ;
+
+        
+    
+    
+                marker_dc4aa20251e30f400c45912da83d9aff.setIcon(icon_93a6335b05bd8a928e724c260d037457);
+            
+    
+            var marker_72e44e597d50f72e7b18e9e7cffdafae = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_60b0468543c9d8053413e06dd49150a0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_34a61831fd542b6c7826eee45338f27f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_f92cfc14e2061beb1d61cbaa889b7280 = $(`<div id="html_f92cfc14e2061beb1d61cbaa889b7280" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Daniel Skeens</h6>                     <p><strong>Date:</strong> May 02, 2014</p>                     <p><strong>Location:</strong> 9 Gladeside Ave</p>                     <p>The 31-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_34a61831fd542b6c7826eee45338f27f.setContent(html_f92cfc14e2061beb1d61cbaa889b7280);
+            
+        
+
+        marker_72e44e597d50f72e7b18e9e7cffdafae.bindPopup(popup_34a61831fd542b6c7826eee45338f27f)
+        ;
+
+        
+    
+    
+                marker_72e44e597d50f72e7b18e9e7cffdafae.setIcon(icon_60b0468543c9d8053413e06dd49150a0);
+            
+    
+            var marker_4ccb135f69065b50bab84f8f4c4480b3 = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_312a3650d8359f33c58161de6c9cc39c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_dbeefdd942f155d157695e305d14a16b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_7985426d56122f210554f69fa236a79f = $(`<div id="html_7985426d56122f210554f69fa236a79f" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Gilson Semedo</h6>                     <p><strong>Date:</strong> May 08, 2014</p>                     <p><strong>Location:</strong> 15 Cawfield St.</p>                     <p>The 27-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_dbeefdd942f155d157695e305d14a16b.setContent(html_7985426d56122f210554f69fa236a79f);
+            
+        
+
+        marker_4ccb135f69065b50bab84f8f4c4480b3.bindPopup(popup_dbeefdd942f155d157695e305d14a16b)
+        ;
+
+        
+    
+    
+                marker_4ccb135f69065b50bab84f8f4c4480b3.setIcon(icon_312a3650d8359f33c58161de6c9cc39c);
+            
+    
+            var marker_c3fcb382acb3f1f64fb481c821a691ce = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_0f2e63e293f3441c83fe66f6a8ca02a2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_40c756b8c2720429979ba6dde4ab03f7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_35b7b40347af791f7cd4b3d662da8d0f = $(`<div id="html_35b7b40347af791f7cd4b3d662da8d0f" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Dominique Boveill</h6>                     <p><strong>Date:</strong> May 18, 2014</p>                     <p><strong>Location:</strong> Boston</p>                     <p>The 20-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_40c756b8c2720429979ba6dde4ab03f7.setContent(html_35b7b40347af791f7cd4b3d662da8d0f);
+            
+        
+
+        marker_c3fcb382acb3f1f64fb481c821a691ce.bindPopup(popup_40c756b8c2720429979ba6dde4ab03f7)
+        ;
+
+        
+    
+    
+                marker_c3fcb382acb3f1f64fb481c821a691ce.setIcon(icon_0f2e63e293f3441c83fe66f6a8ca02a2);
+            
+    
+            var marker_3305eff911136f4db605c3bd3651809d = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_05cc83553dec9099bb96fae7743f3687 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b74d330b24fc46c33de0d26186dec0a6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_bc3a08e99056c7f087074e46568568c1 = $(`<div id="html_bc3a08e99056c7f087074e46568568c1" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Michael Depina</h6>                     <p><strong>Date:</strong> June 06, 2014</p>                     <p><strong>Location:</strong> 5 Taft Street.</p>                     <p>The 28-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_b74d330b24fc46c33de0d26186dec0a6.setContent(html_bc3a08e99056c7f087074e46568568c1);
+            
+        
+
+        marker_3305eff911136f4db605c3bd3651809d.bindPopup(popup_b74d330b24fc46c33de0d26186dec0a6)
+        ;
+
+        
+    
+    
+                marker_3305eff911136f4db605c3bd3651809d.setIcon(icon_05cc83553dec9099bb96fae7743f3687);
+            
+    
+            var marker_989b813b823e39d8619ad3b44181e70c = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_76f031b5f243dffe1fa334989c7df67f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_273be012d68985c7efc7cda3e2c1018d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_996925b1fffc0da7fd464599c2e53ebf = $(`<div id="html_996925b1fffc0da7fd464599c2e53ebf" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Michael Lanier</h6>                     <p><strong>Date:</strong> June 22, 2014</p>                     <p><strong>Location:</strong> Boston</p>                     <p>The 24-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_273be012d68985c7efc7cda3e2c1018d.setContent(html_996925b1fffc0da7fd464599c2e53ebf);
+            
+        
+
+        marker_989b813b823e39d8619ad3b44181e70c.bindPopup(popup_273be012d68985c7efc7cda3e2c1018d)
+        ;
+
+        
+    
+    
+                marker_989b813b823e39d8619ad3b44181e70c.setIcon(icon_76f031b5f243dffe1fa334989c7df67f);
+            
+    
+            var marker_518e81a4488fa19ed5587cd8cf28d04c = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_ebd0507dd16d2fded922c8a621ab973b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9f899bf3a044ed8f0e093a68f12d77cd = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_97ddf1e35f12a1b7bba8f5de304df010 = $(`<div id="html_97ddf1e35f12a1b7bba8f5de304df010" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Walter Cook</h6>                     <p><strong>Date:</strong> June 29, 2014</p>                     <p><strong>Location:</strong> Boston</p>                     <p>The 38-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_9f899bf3a044ed8f0e093a68f12d77cd.setContent(html_97ddf1e35f12a1b7bba8f5de304df010);
+            
+        
+
+        marker_518e81a4488fa19ed5587cd8cf28d04c.bindPopup(popup_9f899bf3a044ed8f0e093a68f12d77cd)
+        ;
+
+        
+    
+    
+                marker_518e81a4488fa19ed5587cd8cf28d04c.setIcon(icon_ebd0507dd16d2fded922c8a621ab973b);
+            
+    
+            var marker_9b9844427bb9b290ff447e848044b9e3 = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_6ad994d98c58a7596e16cad5a36158bf = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2f47ae4478b5ff61ca5f32097aa94502 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_9d81039806ef00f892b29ca395c2af41 = $(`<div id="html_9d81039806ef00f892b29ca395c2af41" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Corey Ragland</h6>                     <p><strong>Date:</strong> June 30, 2014</p>                     <p><strong>Location:</strong> 73 Edgewater Dr.</p>                     <p>The 36-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_2f47ae4478b5ff61ca5f32097aa94502.setContent(html_9d81039806ef00f892b29ca395c2af41);
+            
+        
+
+        marker_9b9844427bb9b290ff447e848044b9e3.bindPopup(popup_2f47ae4478b5ff61ca5f32097aa94502)
+        ;
+
+        
+    
+    
+                marker_9b9844427bb9b290ff447e848044b9e3.setIcon(icon_6ad994d98c58a7596e16cad5a36158bf);
+            
+    
+            var marker_d304964d379d1c3f9b47d96e0523d72f = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_b4ba4750ff60f8d8b32c485b255ebc15 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2adf9a4cb7874d7bb42b003e5471962f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_44ccf5a00f573d5f6b21f393df56a89c = $(`<div id="html_44ccf5a00f573d5f6b21f393df56a89c" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Niko Nunez</h6>                     <p><strong>Date:</strong> July 19, 2014</p>                     <p><strong>Location:</strong> 68 Aguadilla St.</p>                     <p>The 20-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_2adf9a4cb7874d7bb42b003e5471962f.setContent(html_44ccf5a00f573d5f6b21f393df56a89c);
+            
+        
+
+        marker_d304964d379d1c3f9b47d96e0523d72f.bindPopup(popup_2adf9a4cb7874d7bb42b003e5471962f)
+        ;
+
+        
+    
+    
+                marker_d304964d379d1c3f9b47d96e0523d72f.setIcon(icon_b4ba4750ff60f8d8b32c485b255ebc15);
+            
+    
+            var marker_d78d902b8c1f5ac585926d0de632071a = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_e5822065ef0f5486b507acf6657a24d9 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2aae020bd81c94f193e06b79e2d666a6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_fe2e5a1a5f549a2416bffab29fcf07b5 = $(`<div id="html_fe2e5a1a5f549a2416bffab29fcf07b5" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Dwight Price</h6>                     <p><strong>Date:</strong> August 01, 2014</p>                     <p><strong>Location:</strong> 1005 Columbia Rd.</p>                     <p>The 51-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_2aae020bd81c94f193e06b79e2d666a6.setContent(html_fe2e5a1a5f549a2416bffab29fcf07b5);
+            
+        
+
+        marker_d78d902b8c1f5ac585926d0de632071a.bindPopup(popup_2aae020bd81c94f193e06b79e2d666a6)
+        ;
+
+        
+    
+    
+                marker_d78d902b8c1f5ac585926d0de632071a.setIcon(icon_e5822065ef0f5486b507acf6657a24d9);
+            
+    
+            var marker_9ab9009a3ee9f7e625528d43c6816211 = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_749b583810970cc08126dbbd9b1a0d56 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3cb76b807fcfa6ee87f9f3945cc912b7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_90dbc5f78850cc620051b8679e056576 = $(`<div id="html_90dbc5f78850cc620051b8679e056576" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Antoine Dingle-Knight</h6>                     <p><strong>Date:</strong> August 11, 2014</p>                     <p><strong>Location:</strong> 93 Devon St.</p>                     <p>The 27-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_3cb76b807fcfa6ee87f9f3945cc912b7.setContent(html_90dbc5f78850cc620051b8679e056576);
+            
+        
+
+        marker_9ab9009a3ee9f7e625528d43c6816211.bindPopup(popup_3cb76b807fcfa6ee87f9f3945cc912b7)
+        ;
+
+        
+    
+    
+                marker_9ab9009a3ee9f7e625528d43c6816211.setIcon(icon_749b583810970cc08126dbbd9b1a0d56);
+            
+    
+            var marker_b13ba806c3488dfac32340057d16e685 = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_e26c115d8c0d7805ed0bce938552f614 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5b9b5a3491d89231188fe7625483ede4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_6ca4308dc69e8b3f1969967c89f496b7 = $(`<div id="html_6ca4308dc69e8b3f1969967c89f496b7" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Shongi Fernandes</h6>                     <p><strong>Date:</strong> August 31, 2014</p>                     <p><strong>Location:</strong> 52 Claybourne St.</p>                     <p>The 24-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_5b9b5a3491d89231188fe7625483ede4.setContent(html_6ca4308dc69e8b3f1969967c89f496b7);
+            
+        
+
+        marker_b13ba806c3488dfac32340057d16e685.bindPopup(popup_5b9b5a3491d89231188fe7625483ede4)
+        ;
+
+        
+    
+    
+                marker_b13ba806c3488dfac32340057d16e685.setIcon(icon_e26c115d8c0d7805ed0bce938552f614);
+            
+    
+            var marker_e83bedcd9001df0f8e4c1a60eca5bc09 = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_350de34ad865b20d1eeebe911bb88305 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ff2577d9267524ec20daaa871ffeab9b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1d44a448e36852cefc7731c7ce909cfe = $(`<div id="html_1d44a448e36852cefc7731c7ce909cfe" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Adrian Gonzalez</h6>                     <p><strong>Date:</strong> September 06, 2014</p>                     <p><strong>Location:</strong> 17 Ward</p>                     <p>Ian Gonzalez, 17, and was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_ff2577d9267524ec20daaa871ffeab9b.setContent(html_1d44a448e36852cefc7731c7ce909cfe);
+            
+        
+
+        marker_e83bedcd9001df0f8e4c1a60eca5bc09.bindPopup(popup_ff2577d9267524ec20daaa871ffeab9b)
+        ;
+
+        
+    
+    
+                marker_e83bedcd9001df0f8e4c1a60eca5bc09.setIcon(icon_350de34ad865b20d1eeebe911bb88305);
+            
+    
+            var marker_06ed6870ad7f791c5e243fe945ecde7f = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_050f40b6e25d1c546bcb895aeea33a55 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_b0362556c616bd7029c9f301be82d753 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_1a98279e5905ad3a8d1c7d6c8ad6112b = $(`<div id="html_1a98279e5905ad3a8d1c7d6c8ad6112b" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Jimmy Velasquez</h6>                     <p><strong>Date:</strong> September 14, 2014</p>                     <p><strong>Location:</strong> 14 Glenarm St.</p>                     <p>The 49-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_b0362556c616bd7029c9f301be82d753.setContent(html_1a98279e5905ad3a8d1c7d6c8ad6112b);
+            
+        
+
+        marker_06ed6870ad7f791c5e243fe945ecde7f.bindPopup(popup_b0362556c616bd7029c9f301be82d753)
+        ;
+
+        
+    
+    
+                marker_06ed6870ad7f791c5e243fe945ecde7f.setIcon(icon_050f40b6e25d1c546bcb895aeea33a55);
+            
+    
+            var marker_7f8d8e34f7cb533057c2ba001f8361fa = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_0746b02f6e1f63b4e9e2abba43e6dced = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3d4e29a64d4d636b5261ba71f9791ec7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_aa73dbee1de4c2daef9b2cdeb16ac3ec = $(`<div id="html_aa73dbee1de4c2daef9b2cdeb16ac3ec" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Raheem Robertson</h6>                     <p><strong>Date:</strong> September 29, 2014</p>                     <p><strong>Location:</strong> 564 Dudley Street</p>                     <p>The 21-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_3d4e29a64d4d636b5261ba71f9791ec7.setContent(html_aa73dbee1de4c2daef9b2cdeb16ac3ec);
+            
+        
+
+        marker_7f8d8e34f7cb533057c2ba001f8361fa.bindPopup(popup_3d4e29a64d4d636b5261ba71f9791ec7)
+        ;
+
+        
+    
+    
+                marker_7f8d8e34f7cb533057c2ba001f8361fa.setIcon(icon_0746b02f6e1f63b4e9e2abba43e6dced);
+            
+    
+            var marker_bb1460f013d68114661be97c3c6794c7 = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_db6826eab970b587e099ac9753b717f4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e42a6daeb13e0b874a66d7272cc2430d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_cd6c366c7dd148ca22fbfda51a3c6036 = $(`<div id="html_cd6c366c7dd148ca22fbfda51a3c6036" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Juan Nunez</h6>                     <p><strong>Date:</strong> September 30, 2014</p>                     <p><strong>Location:</strong> 239 Parker Hill Ave.</p>                     <p>The 21-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_e42a6daeb13e0b874a66d7272cc2430d.setContent(html_cd6c366c7dd148ca22fbfda51a3c6036);
+            
+        
+
+        marker_bb1460f013d68114661be97c3c6794c7.bindPopup(popup_e42a6daeb13e0b874a66d7272cc2430d)
+        ;
+
+        
+    
+    
+                marker_bb1460f013d68114661be97c3c6794c7.setIcon(icon_db6826eab970b587e099ac9753b717f4);
+            
+    
+            var marker_617ca6d7f2fdfd327857f140573194c3 = L.marker(
+                [42.3601, -71.0589],
+                {
+}
+            ).addTo(map_aced037c9e62eb12136179b0f8f671e1);
+        
+    
+            var icon_2a86baad335c5f0de6b9b8952f47241d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "info-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e3455649b16e20ad2d6f10940e5dd4be = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_816f3dff2f39e4083dd22f78d8f6ae62 = $(`<div id="html_816f3dff2f39e4083dd22f78d8f6ae62" style="width: 100.0%; height: 100.0%;">                 <div style='min-width: 200px'>                     <h6>Shervonne Tucker</h6>                     <p><strong>Date:</strong> November 01, 2014</p>                     <p><strong>Location:</strong> Boston</p>                     <p>The 35-year-old was pronounced deceased. The death was ruled a homicide.</p>                 </div>             </div>`)[0];
+                popup_e3455649b16e20ad2d6f10940e5dd4be.setContent(html_816f3dff2f39e4083dd22f78d8f6ae62);
+            
+        
+
+        marker_617ca6d7f2fdfd327857f140573194c3.bindPopup(popup_e3455649b16e20ad2d6f10940e5dd4be)
+        ;
+
+        
+    
+    
+                marker_617ca6d7f2fdfd327857f140573194c3.setIcon(icon_2a86baad335c5f0de6b9b8952f47241d);
+            
+</script>
+</html>

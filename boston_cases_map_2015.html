@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_4f29ed453e3e7d2a83fe00481de06151 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_4f29ed453e3e7d2a83fe00481de06151" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_4f29ed453e3e7d2a83fe00481de06151 = L.map(
+                "map_4f29ed453e3e7d2a83fe00481de06151",
+                {
+                    center: [42.3601, -71.0589],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_9aeb177c85d35dd4a1da91c9374a0701 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_9aeb177c85d35dd4a1da91c9374a0701.addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+            var marker_ffde9194aaeb87fa46185abd5aff1ad8 = L.marker(
+                [42.3166785, -71.0887021],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_3dd6ffcde3bf96397b834ba1f3ca75f9 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d17a2d7f98297ae2905d843011640b7e = $(`<div id="html_d17a2d7f98297ae2905d843011640b7e" style="width: 100.0%; height: 100.0%;">Alex Dosouto<br>January 8, 2015<br>104 Harrishof St.</div>`)[0];
+                popup_3dd6ffcde3bf96397b834ba1f3ca75f9.setContent(html_d17a2d7f98297ae2905d843011640b7e);
+            
+        
+
+        marker_ffde9194aaeb87fa46185abd5aff1ad8.bindPopup(popup_3dd6ffcde3bf96397b834ba1f3ca75f9)
+        ;
+
+        
+    
+    
+            var marker_7d770e7eb5bbe6d9e030643577726228 = L.marker(
+                [42.357618934625116, -71.06806927706066],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_c1f0683fb3d47de083f8867800a58a54 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_18571a9fa5af5fe74ef75b4de471631e = $(`<div id="html_18571a9fa5af5fe74ef75b4de471631e" style="width: 100.0%; height: 100.0%;">Willie Williams<br>March 15, 2015<br>23 Lincoln</div>`)[0];
+                popup_c1f0683fb3d47de083f8867800a58a54.setContent(html_18571a9fa5af5fe74ef75b4de471631e);
+            
+        
+
+        marker_7d770e7eb5bbe6d9e030643577726228.bindPopup(popup_c1f0683fb3d47de083f8867800a58a54)
+        ;
+
+        
+    
+    
+            var marker_f1b5978e9a4b905ab94990ea52d704cd = L.marker(
+                [42.3069214, -71.0703316],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_7e91b320e8eec478853b84453caf6b72 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_1695ed382617ec875ad65ee3d22b1b96 = $(`<div id="html_1695ed382617ec875ad65ee3d22b1b96" style="width: 100.0%; height: 100.0%;">Jeromie Johnson<br>April 8, 2015<br>50 Richfield Street</div>`)[0];
+                popup_7e91b320e8eec478853b84453caf6b72.setContent(html_1695ed382617ec875ad65ee3d22b1b96);
+            
+        
+
+        marker_f1b5978e9a4b905ab94990ea52d704cd.bindPopup(popup_7e91b320e8eec478853b84453caf6b72)
+        ;
+
+        
+    
+    
+            var marker_0a07f4c969c9f1c68a5379cac596e17d = L.marker(
+                [42.3248774, -71.0790252],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_1a0a2477c7f4804c90c8f8c1eddf1e2c = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_14e8bf6862ccc958b7548723283076cb = $(`<div id="html_14e8bf6862ccc958b7548723283076cb" style="width: 100.0%; height: 100.0%;">Nevin King<br>May 7, 2015<br>67 Winthrop St.</div>`)[0];
+                popup_1a0a2477c7f4804c90c8f8c1eddf1e2c.setContent(html_14e8bf6862ccc958b7548723283076cb);
+            
+        
+
+        marker_0a07f4c969c9f1c68a5379cac596e17d.bindPopup(popup_1a0a2477c7f4804c90c8f8c1eddf1e2c)
+        ;
+
+        
+    
+    
+            var marker_5a7f374418543b217cd416bf093d0ad6 = L.marker(
+                [42.353012209649876, -71.05696801014825],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_b801b2feff0df0ece72809e937082fec = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_bf8368147cfe42190d34ab809ba8e282 = $(`<div id="html_bf8368147cfe42190d34ab809ba8e282" style="width: 100.0%; height: 100.0%;">Larry Moore<br>May 23, 2015<br>70 Weave</div>`)[0];
+                popup_b801b2feff0df0ece72809e937082fec.setContent(html_bf8368147cfe42190d34ab809ba8e282);
+            
+        
+
+        marker_5a7f374418543b217cd416bf093d0ad6.bindPopup(popup_b801b2feff0df0ece72809e937082fec)
+        ;
+
+        
+    
+    
+            var marker_c7530ca2b789f357b326b9f82aa402bd = L.marker(
+                [42.358509484913185, -71.05887616908743],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_284fecc0988dcf235a0637ce8f325494 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3ea71bd9d54a004f7ce6804ba97b3173 = $(`<div id="html_3ea71bd9d54a004f7ce6804ba97b3173" style="width: 100.0%; height: 100.0%;">Ryan Alexander<br>July 4, 2015<br>Boston</div>`)[0];
+                popup_284fecc0988dcf235a0637ce8f325494.setContent(html_3ea71bd9d54a004f7ce6804ba97b3173);
+            
+        
+
+        marker_c7530ca2b789f357b326b9f82aa402bd.bindPopup(popup_284fecc0988dcf235a0637ce8f325494)
+        ;
+
+        
+    
+    
+            var marker_168c7f2f308bff5ac3a4b6a603844568 = L.marker(
+                [42.2938027, -71.1187073],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_301a32288e317aa488a585deebdfea9e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e57f1d7b2ef50fdbbb0a3b6ab3ce40b1 = $(`<div id="html_e57f1d7b2ef50fdbbb0a3b6ab3ce40b1" style="width: 100.0%; height: 100.0%;">Jason Castillo<br>July 20, 2015<br>50 Brookway</div>`)[0];
+                popup_301a32288e317aa488a585deebdfea9e.setContent(html_e57f1d7b2ef50fdbbb0a3b6ab3ce40b1);
+            
+        
+
+        marker_168c7f2f308bff5ac3a4b6a603844568.bindPopup(popup_301a32288e317aa488a585deebdfea9e)
+        ;
+
+        
+    
+    
+            var marker_7c62dc5de860609280bc25f9112d18e3 = L.marker(
+                [42.35962319701658, -71.05972854961072],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_19d62a02b90f2085c91cb4d601fcdc54 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_02aca5ddb91e49556306ed0bb96c405c = $(`<div id="html_02aca5ddb91e49556306ed0bb96c405c" style="width: 100.0%; height: 100.0%;">Grisel Sanchez<br>July 28, 2015<br>Boston</div>`)[0];
+                popup_19d62a02b90f2085c91cb4d601fcdc54.setContent(html_02aca5ddb91e49556306ed0bb96c405c);
+            
+        
+
+        marker_7c62dc5de860609280bc25f9112d18e3.bindPopup(popup_19d62a02b90f2085c91cb4d601fcdc54)
+        ;
+
+        
+    
+    
+            var marker_44a69d9eb1eed73c0c3687acaa529780 = L.marker(
+                [42.35275421267636, -71.06867183355821],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_8cb61aad9627f5a5556339e2f93c97cd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b317774e962c309b2dd0be8622b07a6d = $(`<div id="html_b317774e962c309b2dd0be8622b07a6d" style="width: 100.0%; height: 100.0%;">Andrew Reid<br>August 12, 2015<br>12 Ernst</div>`)[0];
+                popup_8cb61aad9627f5a5556339e2f93c97cd.setContent(html_b317774e962c309b2dd0be8622b07a6d);
+            
+        
+
+        marker_44a69d9eb1eed73c0c3687acaa529780.bindPopup(popup_8cb61aad9627f5a5556339e2f93c97cd)
+        ;
+
+        
+    
+    
+            var marker_8714b0875d7176fc7cb1e2409d486f5f = L.marker(
+                [42.36679989449898, -71.0499700079773],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_bbf386b1c62b7afeb5c178c8b67eb5cf = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8a7334f8e8c03bf23cda6e840b8234fb = $(`<div id="html_8a7334f8e8c03bf23cda6e840b8234fb" style="width: 100.0%; height: 100.0%;">Angel Oller<br>August 12, 2015<br>12 Ernst</div>`)[0];
+                popup_bbf386b1c62b7afeb5c178c8b67eb5cf.setContent(html_8a7334f8e8c03bf23cda6e840b8234fb);
+            
+        
+
+        marker_8714b0875d7176fc7cb1e2409d486f5f.bindPopup(popup_bbf386b1c62b7afeb5c178c8b67eb5cf)
+        ;
+
+        
+    
+    
+            var marker_22f5cb09abb66a86f1552c9149204799 = L.marker(
+                [42.2803449, -71.0898785],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_03af62ca6c94cb4f2869b474e1ee0ef1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b9d5a0c83bdb9f419ab52cc1dda269d7 = $(`<div id="html_b9d5a0c83bdb9f419ab52cc1dda269d7" style="width: 100.0%; height: 100.0%;">Darwin Adilas<br>August 12, 2015<br>41 Hosmer St.</div>`)[0];
+                popup_03af62ca6c94cb4f2869b474e1ee0ef1.setContent(html_b9d5a0c83bdb9f419ab52cc1dda269d7);
+            
+        
+
+        marker_22f5cb09abb66a86f1552c9149204799.bindPopup(popup_03af62ca6c94cb4f2869b474e1ee0ef1)
+        ;
+
+        
+    
+    
+            var marker_3f79b1f7f23b9d3ccba252ac10114264 = L.marker(
+                [42.353289829250585, -71.06657272532748],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_c14fbb270d29bcee796335c2769896c0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fa923f5b274fd6db5b73f18f80cacfdb = $(`<div id="html_fa923f5b274fd6db5b73f18f80cacfdb" style="width: 100.0%; height: 100.0%;">Tedford Davis<br>August 29, 2015<br>29 Crest</div>`)[0];
+                popup_c14fbb270d29bcee796335c2769896c0.setContent(html_fa923f5b274fd6db5b73f18f80cacfdb);
+            
+        
+
+        marker_3f79b1f7f23b9d3ccba252ac10114264.bindPopup(popup_c14fbb270d29bcee796335c2769896c0)
+        ;
+
+        
+    
+    
+            var marker_59202cfcbf846811ea5ca26abf47452f = L.marker(
+                [42.3163501, -71.0896562],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_a8154f502ba8a908c12b2cf39f771584 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5a8a67688a4a1109719c672bffab2b96 = $(`<div id="html_5a8a67688a4a1109719c672bffab2b96" style="width: 100.0%; height: 100.0%;">Zachary Pinnick<br>September 10, 2015<br>56 Holworthy St.</div>`)[0];
+                popup_a8154f502ba8a908c12b2cf39f771584.setContent(html_5a8a67688a4a1109719c672bffab2b96);
+            
+        
+
+        marker_59202cfcbf846811ea5ca26abf47452f.bindPopup(popup_a8154f502ba8a908c12b2cf39f771584)
+        ;
+
+        
+    
+    
+            var marker_e05b235cdb558cee6e00c6d47a6b7ac5 = L.marker(
+                [42.3615797804545, -71.05925541076317],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_d716ef414e9b67cae4b17ec7ad220b57 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e48b24e193d920cf99daf1b393b1a974 = $(`<div id="html_e48b24e193d920cf99daf1b393b1a974" style="width: 100.0%; height: 100.0%;">Natho C<br>September 23, 2015<br>Boston</div>`)[0];
+                popup_d716ef414e9b67cae4b17ec7ad220b57.setContent(html_e48b24e193d920cf99daf1b393b1a974);
+            
+        
+
+        marker_e05b235cdb558cee6e00c6d47a6b7ac5.bindPopup(popup_d716ef414e9b67cae4b17ec7ad220b57)
+        ;
+
+        
+    
+    
+            var marker_6bc551213ffe58ff8ca68f7c36dad105 = L.marker(
+                [42.2893261, -71.0626124],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_e51d1b42a74075aba43c39fe9be87681 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b2e01e2b682763e1ddb5c8f67bcab09c = $(`<div id="html_b2e01e2b682763e1ddb5c8f67bcab09c" style="width: 100.0%; height: 100.0%;">Dominic J<br>November 3, 2015<br>15 Shepton St.</div>`)[0];
+                popup_e51d1b42a74075aba43c39fe9be87681.setContent(html_b2e01e2b682763e1ddb5c8f67bcab09c);
+            
+        
+
+        marker_6bc551213ffe58ff8ca68f7c36dad105.bindPopup(popup_e51d1b42a74075aba43c39fe9be87681)
+        ;
+
+        
+    
+    
+            var marker_2dcd7a93a3e9902d95fe69256ff5859d = L.marker(
+                [42.3223118, -71.1070828],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_8a04af7c728df045059c01d50160d983 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_3c74131c87575cec9a1d4822396446e8 = $(`<div id="html_3c74131c87575cec9a1d4822396446e8" style="width: 100.0%; height: 100.0%;">Bryan Santos<br>November 20, 2015<br>348 Centre St.</div>`)[0];
+                popup_8a04af7c728df045059c01d50160d983.setContent(html_3c74131c87575cec9a1d4822396446e8);
+            
+        
+
+        marker_2dcd7a93a3e9902d95fe69256ff5859d.bindPopup(popup_8a04af7c728df045059c01d50160d983)
+        ;
+
+        
+    
+    
+            var marker_94f34d5ea2ed5e6b5300d647fdfee5b9 = L.marker(
+                [42.35247605096939, -71.05228694400645],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_5f8059c0d695e861037b9f230ec6cb7f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2db07269ed2ad9028c229ca38b11b57f = $(`<div id="html_2db07269ed2ad9028c229ca38b11b57f" style="width: 100.0%; height: 100.0%;">Jephthe Chery<br>November 26, 2015<br>19 Yawkey Way.</div>`)[0];
+                popup_5f8059c0d695e861037b9f230ec6cb7f.setContent(html_2db07269ed2ad9028c229ca38b11b57f);
+            
+        
+
+        marker_94f34d5ea2ed5e6b5300d647fdfee5b9.bindPopup(popup_5f8059c0d695e861037b9f230ec6cb7f)
+        ;
+
+        
+    
+    
+            var marker_2f87b789bf21ce1902b26340150b1aa6 = L.marker(
+                [42.359076593679, -71.0581816865292],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_30811a64ea9ef011544039ac6837def7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5cad24c86ad91eff180346f678bfa629 = $(`<div id="html_5cad24c86ad91eff180346f678bfa629" style="width: 100.0%; height: 100.0%;">Wellington Ruiz<br>December 9, 2015<br>Boston</div>`)[0];
+                popup_30811a64ea9ef011544039ac6837def7.setContent(html_5cad24c86ad91eff180346f678bfa629);
+            
+        
+
+        marker_2f87b789bf21ce1902b26340150b1aa6.bindPopup(popup_30811a64ea9ef011544039ac6837def7)
+        ;
+
+        
+    
+    
+            var marker_24991cebcbb4c1833c8ed6e61a081ef5 = L.marker(
+                [42.2895937, -71.077197],
+                {
+}
+            ).addTo(map_4f29ed453e3e7d2a83fe00481de06151);
+        
+    
+        var popup_8af0d8441899d45c5eaf2806025c25aa = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_de35b3f2008313f49cb7101627591491 = $(`<div id="html_de35b3f2008313f49cb7101627591491" style="width: 100.0%; height: 100.0%;">Eric Durham<br>December 11, 2015<br>120 Southern Ave.</div>`)[0];
+                popup_8af0d8441899d45c5eaf2806025c25aa.setContent(html_de35b3f2008313f49cb7101627591491);
+            
+        
+
+        marker_24991cebcbb4c1833c8ed6e61a081ef5.bindPopup(popup_8af0d8441899d45c5eaf2806025c25aa)
+        ;
+
+        
+    
+</script>
+</html>
